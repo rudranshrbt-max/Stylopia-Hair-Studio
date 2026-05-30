@@ -1,0 +1,3369 @@
+<!DOCTYPE html>
+<html lang="en" data-theme="dark">
+<head>
+<meta charset="UTF-8">
+<meta name="viewport" content="width=device-width, initial-scale=1.0">
+<meta name="description" content="Stylopia Hair Studio - Premium Hair Salon in Nagpur. Expert cuts, coloring, treatments & styling. Book your appointment today.">
+<meta name="keywords" content="hair salon nagpur, best hair salon sitabuldi, hair coloring nagpur, keratin treatment nagpur, stylopia">
+<meta property="og:title" content="Stylopia Hair Studio | Premium Hair Salon Nagpur">
+<meta property="og:description" content="Transform your look at Nagpur's most exclusive hair studio. Expert stylists, premium products, luxury experience.">
+<title>Stylopia Hair Studio | Premium Hair Salon · Nagpur</title>
+<link rel="preconnect" href="https://fonts.googleapis.com">
+<link href="https://fonts.googleapis.com/css2?family=Cormorant+Garamond:ital,wght@0,300;0,400;0,600;1,300;1,400&family=DM+Sans:wght@300;400;500&family=Playfair+Display:ital,wght@0,700;1,500&display=swap" rel="stylesheet">
+<script src="https://cdnjs.cloudflare.com/ajax/libs/three.js/r128/three.min.js"></script>
+<style>
+/* ========== DESIGN TOKENS ========== */
+:root {
+  --gold: #C9A84C;
+  --gold-light: #E8D08A;
+  --gold-dim: #8A6E2F;
+  --cream: #F5EDD8;
+  --warm-white: #FAF7F0;
+  --transition: 0.4s cubic-bezier(0.25, 0.46, 0.45, 0.94);
+  --font-display: 'Cormorant Garamond', serif;
+  --font-heading: 'Playfair Display', serif;
+  --font-body: 'DM Sans', sans-serif;
+  --radius: 2px;
+  --radius-card: 12px;
+}
+
+[data-theme="dark"] {
+  --bg: #080808;
+  --bg2: #0f0f0f;
+  --bg3: #161616;
+  --bg-card: #111111;
+  --surface: #1a1a1a;
+  --border: rgba(201,168,76,0.15);
+  --text: #F0EAD6;
+  --text-muted: #888;
+  --text-sub: #555;
+  --nav-bg: rgba(8,8,8,0.92);
+  --shadow: 0 20px 60px rgba(0,0,0,0.6);
+  --glow: 0 0 40px rgba(201,168,76,0.12);
+}
+
+[data-theme="light"] {
+  --bg: #FAFAF8;
+  --bg2: #F5F2EC;
+  --bg3: #EDE8DE;
+  --bg-card: #FFFFFF;
+  --surface: #F0EBE0;
+  --border: rgba(201,168,76,0.25);
+  --text: #1A1610;
+  --text-muted: #6B6050;
+  --text-sub: #9B8E7E;
+  --nav-bg: rgba(250,250,248,0.95);
+  --shadow: 0 20px 60px rgba(0,0,0,0.1);
+  --glow: 0 0 40px rgba(201,168,76,0.08);
+}
+
+[data-theme="warm"] {
+  --bg: #1A1208;
+  --bg2: #201708;
+  --bg3: #2A1E0A;
+  --bg-card: #231A09;
+  --surface: #2E2210;
+  --border: rgba(201,168,76,0.2);
+  --text: #F5E8C8;
+  --text-muted: #A08850;
+  --text-sub: #6B5830;
+  --nav-bg: rgba(26,18,8,0.95);
+  --shadow: 0 20px 60px rgba(0,0,0,0.5);
+  --glow: 0 0 60px rgba(201,168,76,0.15);
+}
+
+*,*::before,*::after { box-sizing:border-box; margin:0; padding:0; }
+
+html { scroll-behavior: smooth; font-size: 16px; }
+
+body {
+  font-family: var(--font-body);
+  background: var(--bg);
+  color: var(--text);
+  overflow-x: hidden;
+  transition: background 0.5s ease, color 0.5s ease;
+}
+
+/* ========== SCROLLBAR ========== */
+::-webkit-scrollbar { width: 4px; }
+::-webkit-scrollbar-track { background: var(--bg); }
+::-webkit-scrollbar-thumb { background: var(--gold-dim); border-radius: 2px; }
+
+/* ========== SELECTION ========== */
+::selection { background: var(--gold); color: #000; }
+
+/* ========== 3D CANVAS ========== */
+#hero-canvas {
+  position: absolute;
+  inset: 0;
+  width: 100%;
+  height: 100%;
+  opacity: 0.6;
+  pointer-events: none;
+}
+
+/* ========== NAV ========== */
+nav {
+  position: fixed;
+  top: 0; left: 0; right: 0;
+  z-index: 1000;
+  background: var(--nav-bg);
+  backdrop-filter: blur(20px);
+  -webkit-backdrop-filter: blur(20px);
+  border-bottom: 1px solid var(--border);
+  transition: all var(--transition);
+}
+
+.nav-inner {
+  max-width: 1300px;
+  margin: 0 auto;
+  padding: 0 2rem;
+  height: 70px;
+  display: flex;
+  align-items: center;
+  justify-content: space-between;
+}
+
+.logo {
+  display: flex;
+  flex-direction: column;
+  line-height: 1;
+}
+
+.logo-name {
+  font-family: var(--font-display);
+  font-size: 1.6rem;
+  font-weight: 600;
+  color: var(--gold);
+  letter-spacing: 0.05em;
+}
+
+.logo-sub {
+  font-size: 0.6rem;
+  letter-spacing: 0.3em;
+  text-transform: uppercase;
+  color: var(--text-muted);
+  margin-top: 2px;
+}
+
+.nav-links {
+  display: flex;
+  align-items: center;
+  gap: 2.5rem;
+  list-style: none;
+}
+
+.nav-links a {
+  text-decoration: none;
+  color: var(--text-muted);
+  font-size: 0.78rem;
+  letter-spacing: 0.15em;
+  text-transform: uppercase;
+  transition: color 0.3s;
+  position: relative;
+}
+
+.nav-links a::after {
+  content: '';
+  position: absolute;
+  bottom: -4px;
+  left: 0; right: 100%;
+  height: 1px;
+  background: var(--gold);
+  transition: right 0.3s ease;
+}
+
+.nav-links a:hover { color: var(--gold); }
+.nav-links a:hover::after { right: 0; }
+
+.nav-right {
+  display: flex;
+  align-items: center;
+  gap: 1rem;
+}
+
+/* Theme Toggle */
+.theme-switcher {
+  display: flex;
+  gap: 4px;
+  background: var(--surface);
+  border: 1px solid var(--border);
+  border-radius: 20px;
+  padding: 4px;
+}
+
+.theme-btn {
+  background: none;
+  border: none;
+  cursor: pointer;
+  padding: 4px 8px;
+  border-radius: 14px;
+  font-size: 0.65rem;
+  letter-spacing: 0.08em;
+  text-transform: uppercase;
+  color: var(--text-muted);
+  transition: all 0.3s;
+}
+
+.theme-btn.active {
+  background: var(--gold);
+  color: #000;
+  font-weight: 600;
+}
+
+.btn-nav-book {
+  background: var(--gold);
+  color: #000;
+  border: none;
+  padding: 9px 20px;
+  font-family: var(--font-body);
+  font-size: 0.72rem;
+  font-weight: 500;
+  letter-spacing: 0.15em;
+  text-transform: uppercase;
+  cursor: pointer;
+  border-radius: 2px;
+  transition: all 0.3s;
+  text-decoration: none;
+  display: inline-block;
+}
+
+.btn-nav-book:hover {
+  background: var(--gold-light);
+  transform: translateY(-1px);
+}
+
+.hamburger {
+  display: none;
+  flex-direction: column;
+  gap: 5px;
+  cursor: pointer;
+  padding: 5px;
+  background: none;
+  border: none;
+}
+
+.hamburger span {
+  display: block;
+  width: 24px;
+  height: 1.5px;
+  background: var(--gold);
+  transition: all 0.3s;
+}
+
+/* ========== HERO ========== */
+#hero {
+  position: relative;
+  min-height: 100vh;
+  display: flex;
+  align-items: center;
+  overflow: hidden;
+  background: var(--bg);
+}
+
+.hero-overlay {
+  position: absolute;
+  inset: 0;
+  background: radial-gradient(ellipse at 60% 50%, rgba(201,168,76,0.06) 0%, transparent 70%);
+  pointer-events: none;
+}
+
+.hero-grid-lines {
+  position: absolute;
+  inset: 0;
+  background-image:
+    linear-gradient(rgba(201,168,76,0.03) 1px, transparent 1px),
+    linear-gradient(90deg, rgba(201,168,76,0.03) 1px, transparent 1px);
+  background-size: 60px 60px;
+  pointer-events: none;
+}
+
+.hero-content {
+  position: relative;
+  z-index: 2;
+  max-width: 1300px;
+  margin: 0 auto;
+  padding: 120px 2rem 80px;
+  width: 100%;
+}
+
+.hero-badge {
+  display: inline-flex;
+  align-items: center;
+  gap: 8px;
+  border: 1px solid var(--border);
+  padding: 6px 16px;
+  font-size: 0.65rem;
+  letter-spacing: 0.25em;
+  text-transform: uppercase;
+  color: var(--gold);
+  margin-bottom: 2rem;
+  background: rgba(201,168,76,0.05);
+  animation: fadeUp 0.8s ease both;
+}
+
+.hero-badge::before {
+  content: '';
+  width: 6px; height: 6px;
+  border-radius: 50%;
+  background: var(--gold);
+  animation: pulse 2s infinite;
+}
+
+@keyframes pulse {
+  0%,100% { opacity: 1; transform: scale(1); }
+  50% { opacity: 0.5; transform: scale(0.8); }
+}
+
+.hero-title {
+  font-family: var(--font-display);
+  font-size: clamp(3.5rem, 9vw, 8rem);
+  font-weight: 300;
+  line-height: 0.95;
+  color: var(--text);
+  animation: fadeUp 0.8s 0.1s ease both;
+  max-width: 800px;
+}
+
+.hero-title em {
+  font-style: italic;
+  color: var(--gold);
+}
+
+.hero-title .line2 {
+  display: block;
+  padding-left: clamp(2rem, 8vw, 8rem);
+}
+
+.hero-sub {
+  font-family: var(--font-body);
+  font-size: 1rem;
+  line-height: 1.8;
+  color: var(--text-muted);
+  max-width: 480px;
+  margin: 2rem 0 3rem;
+  animation: fadeUp 0.8s 0.2s ease both;
+}
+
+.hero-cta-row {
+  display: flex;
+  flex-wrap: wrap;
+  gap: 1rem;
+  animation: fadeUp 0.8s 0.3s ease both;
+}
+
+.btn-primary {
+  background: var(--gold);
+  color: #000;
+  border: none;
+  padding: 16px 36px;
+  font-family: var(--font-body);
+  font-size: 0.78rem;
+  font-weight: 500;
+  letter-spacing: 0.2em;
+  text-transform: uppercase;
+  cursor: pointer;
+  border-radius: 2px;
+  transition: all 0.3s;
+  text-decoration: none;
+  display: inline-flex;
+  align-items: center;
+  gap: 8px;
+}
+
+.btn-primary:hover {
+  background: var(--gold-light);
+  transform: translateY(-2px);
+  box-shadow: 0 8px 30px rgba(201,168,76,0.3);
+}
+
+.btn-ghost {
+  background: transparent;
+  color: var(--text);
+  border: 1px solid var(--border);
+  padding: 16px 36px;
+  font-family: var(--font-body);
+  font-size: 0.78rem;
+  font-weight: 500;
+  letter-spacing: 0.2em;
+  text-transform: uppercase;
+  cursor: pointer;
+  border-radius: 2px;
+  transition: all 0.3s;
+  text-decoration: none;
+  display: inline-flex;
+  align-items: center;
+  gap: 8px;
+}
+
+.btn-ghost:hover {
+  border-color: var(--gold);
+  color: var(--gold);
+  background: rgba(201,168,76,0.05);
+}
+
+.hero-stats {
+  display: flex;
+  gap: 3rem;
+  margin-top: 4rem;
+  padding-top: 2rem;
+  border-top: 1px solid var(--border);
+  animation: fadeUp 0.8s 0.4s ease both;
+  flex-wrap: wrap;
+}
+
+.stat-item { text-align: left; }
+
+.stat-num {
+  font-family: var(--font-display);
+  font-size: 2.2rem;
+  font-weight: 600;
+  color: var(--gold);
+  display: block;
+}
+
+.stat-label {
+  font-size: 0.68rem;
+  letter-spacing: 0.2em;
+  text-transform: uppercase;
+  color: var(--text-muted);
+}
+
+/* 3D Visual Side */
+.hero-visual {
+  position: absolute;
+  right: -5%;
+  top: 50%;
+  transform: translateY(-50%);
+  width: 45%;
+  height: 80%;
+  pointer-events: none;
+}
+
+/* Floating Cards */
+.floating-card {
+  position: absolute;
+  background: var(--bg-card);
+  border: 1px solid var(--border);
+  border-radius: var(--radius-card);
+  padding: 16px 20px;
+  animation: float 6s ease-in-out infinite;
+  backdrop-filter: blur(10px);
+}
+
+.float-card-1 {
+  right: 28%;
+  top: 25%;
+  animation-delay: 0s;
+  min-width: 160px;
+}
+
+.float-card-2 {
+  right: 8%;
+  top: 42%;
+  animation-delay: 2s;
+  min-width: 140px;
+}
+
+.float-card-3 {
+  right: 22%;
+  bottom: 22%;
+  animation-delay: 4s;
+  min-width: 150px;
+}
+
+@keyframes float {
+  0%,100% { transform: translateY(0px) rotate(0deg); }
+  33% { transform: translateY(-12px) rotate(1deg); }
+  66% { transform: translateY(6px) rotate(-1deg); }
+}
+
+.float-card-label {
+  font-size: 0.6rem;
+  letter-spacing: 0.2em;
+  text-transform: uppercase;
+  color: var(--text-sub);
+  margin-bottom: 4px;
+}
+
+.float-card-value {
+  font-family: var(--font-display);
+  font-size: 1.4rem;
+  font-weight: 600;
+  color: var(--gold);
+}
+
+.float-card-sub {
+  font-size: 0.7rem;
+  color: var(--text-muted);
+  margin-top: 2px;
+}
+
+@keyframes fadeUp {
+  from { opacity: 0; transform: translateY(30px); }
+  to { opacity: 1; transform: translateY(0); }
+}
+
+/* ========== SECTION COMMON ========== */
+section { position: relative; }
+
+.section-inner {
+  max-width: 1300px;
+  margin: 0 auto;
+  padding: 100px 2rem;
+}
+
+.section-label {
+  font-size: 0.62rem;
+  letter-spacing: 0.35em;
+  text-transform: uppercase;
+  color: var(--gold);
+  display: flex;
+  align-items: center;
+  gap: 12px;
+  margin-bottom: 1.5rem;
+}
+
+.section-label::before {
+  content: '';
+  width: 30px;
+  height: 1px;
+  background: var(--gold);
+}
+
+.section-title {
+  font-family: var(--font-display);
+  font-size: clamp(2.2rem, 5vw, 3.8rem);
+  font-weight: 300;
+  line-height: 1.1;
+  color: var(--text);
+  margin-bottom: 1.5rem;
+}
+
+.section-title em {
+  font-style: italic;
+  color: var(--gold);
+}
+
+/* ========== MARQUEE ========== */
+.marquee-section {
+  border-top: 1px solid var(--border);
+  border-bottom: 1px solid var(--border);
+  padding: 18px 0;
+  overflow: hidden;
+  background: var(--bg2);
+}
+
+.marquee-track {
+  display: flex;
+  gap: 0;
+  animation: marquee 25s linear infinite;
+  width: max-content;
+}
+
+.marquee-item {
+  display: flex;
+  align-items: center;
+  gap: 16px;
+  padding: 0 40px;
+  font-size: 0.7rem;
+  letter-spacing: 0.25em;
+  text-transform: uppercase;
+  color: var(--text-muted);
+  white-space: nowrap;
+}
+
+.marquee-item span {
+  color: var(--gold);
+  font-size: 1rem;
+}
+
+@keyframes marquee {
+  from { transform: translateX(0); }
+  to { transform: translateX(-50%); }
+}
+
+/* ========== ABOUT ========== */
+#about { background: var(--bg2); }
+
+.about-grid {
+  display: grid;
+  grid-template-columns: 1fr 1fr;
+  gap: 80px;
+  align-items: center;
+}
+
+.about-visual {
+  position: relative;
+}
+
+.about-img-main {
+  width: 100%;
+  aspect-ratio: 4/5;
+  background: var(--surface);
+  border-radius: 4px;
+  overflow: hidden;
+  position: relative;
+}
+
+.about-img-main img {
+  width: 100%;
+  height: 100%;
+  object-fit: cover;
+  transition: transform 0.8s ease;
+}
+
+.about-img-main:hover img { transform: scale(1.04); }
+
+.about-img-accent {
+  position: absolute;
+  bottom: -30px;
+  right: -30px;
+  width: 55%;
+  aspect-ratio: 1;
+  background: var(--bg-card);
+  border: 1px solid var(--border);
+  border-radius: 4px;
+  overflow: hidden;
+  box-shadow: var(--shadow);
+}
+
+.about-img-accent img {
+  width: 100%;
+  height: 100%;
+  object-fit: cover;
+}
+
+.about-experience-badge {
+  position: absolute;
+  top: -20px;
+  left: -20px;
+  width: 90px;
+  height: 90px;
+  background: var(--gold);
+  border-radius: 50%;
+  display: flex;
+  flex-direction: column;
+  align-items: center;
+  justify-content: center;
+  color: #000;
+}
+
+.about-experience-badge .num {
+  font-family: var(--font-display);
+  font-size: 1.8rem;
+  font-weight: 600;
+  line-height: 1;
+}
+
+.about-experience-badge .lbl {
+  font-size: 0.5rem;
+  letter-spacing: 0.15em;
+  text-transform: uppercase;
+  text-align: center;
+  line-height: 1.3;
+}
+
+.about-text p {
+  font-size: 1rem;
+  line-height: 1.9;
+  color: var(--text-muted);
+  margin-bottom: 1.5rem;
+}
+
+.about-pillars {
+  display: grid;
+  grid-template-columns: 1fr 1fr;
+  gap: 16px;
+  margin-top: 2rem;
+}
+
+.pillar {
+  background: var(--bg-card);
+  border: 1px solid var(--border);
+  border-radius: var(--radius-card);
+  padding: 20px;
+  transition: all 0.3s;
+}
+
+.pillar:hover {
+  border-color: var(--gold);
+  box-shadow: var(--glow);
+  transform: translateY(-3px);
+}
+
+.pillar-icon { font-size: 1.4rem; margin-bottom: 8px; }
+.pillar-name {
+  font-size: 0.8rem;
+  font-weight: 500;
+  color: var(--text);
+  letter-spacing: 0.05em;
+}
+.pillar-desc {
+  font-size: 0.72rem;
+  color: var(--text-muted);
+  margin-top: 4px;
+  line-height: 1.5;
+}
+
+/* ========== SERVICES ========== */
+#services { background: var(--bg); }
+
+.services-intro {
+  display: grid;
+  grid-template-columns: 1fr 1fr;
+  gap: 60px;
+  align-items: end;
+  margin-bottom: 60px;
+}
+
+.services-intro-text p {
+  color: var(--text-muted);
+  line-height: 1.8;
+}
+
+.services-filter {
+  display: flex;
+  gap: 8px;
+  flex-wrap: wrap;
+  justify-content: flex-end;
+  align-items: center;
+}
+
+.filter-btn {
+  background: none;
+  border: 1px solid var(--border);
+  color: var(--text-muted);
+  padding: 7px 18px;
+  font-family: var(--font-body);
+  font-size: 0.7rem;
+  letter-spacing: 0.12em;
+  text-transform: uppercase;
+  cursor: pointer;
+  border-radius: 20px;
+  transition: all 0.3s;
+}
+
+.filter-btn:hover, .filter-btn.active {
+  background: var(--gold);
+  border-color: var(--gold);
+  color: #000;
+}
+
+.services-grid {
+  display: grid;
+  grid-template-columns: repeat(3, 1fr);
+  gap: 1px;
+  background: var(--border);
+  border: 1px solid var(--border);
+}
+
+.service-card {
+  background: var(--bg);
+  padding: 40px 36px;
+  position: relative;
+  overflow: hidden;
+  cursor: pointer;
+  transition: all 0.4s;
+}
+
+.service-card::before {
+  content: '';
+  position: absolute;
+  inset: 0;
+  background: linear-gradient(135deg, rgba(201,168,76,0.08) 0%, transparent 60%);
+  opacity: 0;
+  transition: opacity 0.4s;
+}
+
+.service-card:hover {
+  background: var(--bg2);
+  z-index: 1;
+}
+
+.service-card:hover::before { opacity: 1; }
+
+.service-num {
+  font-family: var(--font-display);
+  font-size: 3.5rem;
+  font-weight: 300;
+  color: var(--text-sub);
+  line-height: 1;
+  margin-bottom: 1.5rem;
+  transition: color 0.3s;
+}
+
+.service-card:hover .service-num { color: var(--gold-dim); }
+
+.service-name {
+  font-family: var(--font-display);
+  font-size: 1.4rem;
+  font-weight: 400;
+  color: var(--text);
+  margin-bottom: 12px;
+}
+
+.service-desc {
+  font-size: 0.82rem;
+  color: var(--text-muted);
+  line-height: 1.7;
+  margin-bottom: 20px;
+}
+
+.service-price {
+  font-family: var(--font-display);
+  font-size: 1.1rem;
+  color: var(--gold);
+}
+
+.service-price small {
+  font-family: var(--font-body);
+  font-size: 0.7rem;
+  color: var(--text-sub);
+  margin-left: 4px;
+}
+
+.service-arrow {
+  position: absolute;
+  bottom: 30px;
+  right: 30px;
+  width: 36px; height: 36px;
+  border: 1px solid var(--border);
+  border-radius: 50%;
+  display: flex;
+  align-items: center;
+  justify-content: center;
+  color: var(--gold);
+  font-size: 1rem;
+  opacity: 0;
+  transform: translateX(-10px);
+  transition: all 0.3s;
+}
+
+.service-card:hover .service-arrow {
+  opacity: 1;
+  transform: translateX(0);
+}
+
+/* ========== PROCESS ========== */
+#process { background: var(--bg3); }
+
+.process-steps {
+  display: grid;
+  grid-template-columns: repeat(4, 1fr);
+  gap: 40px;
+  margin-top: 60px;
+  position: relative;
+}
+
+.process-steps::before {
+  content: '';
+  position: absolute;
+  top: 32px;
+  left: 10%;
+  right: 10%;
+  height: 1px;
+  background: linear-gradient(90deg, transparent, var(--gold-dim), var(--gold-dim), transparent);
+}
+
+.process-step {
+  text-align: center;
+  position: relative;
+}
+
+.step-num {
+  width: 64px; height: 64px;
+  border: 1px solid var(--gold);
+  border-radius: 50%;
+  display: flex;
+  align-items: center;
+  justify-content: center;
+  font-family: var(--font-display);
+  font-size: 1.4rem;
+  color: var(--gold);
+  margin: 0 auto 24px;
+  background: var(--bg);
+  position: relative;
+  z-index: 1;
+  transition: all 0.3s;
+}
+
+.process-step:hover .step-num {
+  background: var(--gold);
+  color: #000;
+  box-shadow: 0 0 30px rgba(201,168,76,0.4);
+}
+
+.step-title {
+  font-family: var(--font-display);
+  font-size: 1.15rem;
+  color: var(--text);
+  margin-bottom: 10px;
+}
+
+.step-desc {
+  font-size: 0.78rem;
+  color: var(--text-muted);
+  line-height: 1.7;
+}
+
+/* ========== TESTIMONIALS ========== */
+#testimonials { background: var(--bg2); }
+
+.testimonials-grid {
+  display: grid;
+  grid-template-columns: repeat(3, 1fr);
+  gap: 24px;
+  margin-top: 60px;
+}
+
+.testimonial-card {
+  background: var(--bg-card);
+  border: 1px solid var(--border);
+  border-radius: var(--radius-card);
+  padding: 36px;
+  position: relative;
+  transition: all 0.4s;
+}
+
+.testimonial-card:hover {
+  border-color: var(--gold);
+  transform: translateY(-6px);
+  box-shadow: var(--shadow), var(--glow);
+}
+
+.testimonial-card::before {
+  content: '"';
+  position: absolute;
+  top: 20px;
+  right: 24px;
+  font-family: var(--font-display);
+  font-size: 5rem;
+  color: var(--gold);
+  opacity: 0.15;
+  line-height: 1;
+}
+
+.stars {
+  display: flex;
+  gap: 3px;
+  margin-bottom: 16px;
+}
+
+.star { color: var(--gold); font-size: 0.85rem; }
+
+.review-text {
+  font-size: 0.9rem;
+  line-height: 1.8;
+  color: var(--text-muted);
+  margin-bottom: 24px;
+  font-style: italic;
+}
+
+.reviewer {
+  display: flex;
+  align-items: center;
+  gap: 12px;
+}
+
+.reviewer-avatar {
+  width: 42px; height: 42px;
+  border-radius: 50%;
+  background: var(--gold);
+  display: flex;
+  align-items: center;
+  justify-content: center;
+  font-family: var(--font-display);
+  font-size: 1rem;
+  color: #000;
+  font-weight: 600;
+  flex-shrink: 0;
+}
+
+.reviewer-name {
+  font-size: 0.85rem;
+  font-weight: 500;
+  color: var(--text);
+}
+
+.reviewer-location {
+  font-size: 0.7rem;
+  color: var(--text-muted);
+  margin-top: 1px;
+}
+
+/* ========== BOOKING ========== */
+#booking { background: var(--bg); }
+
+.booking-wrap {
+  display: grid;
+  grid-template-columns: 1fr 1.4fr;
+  gap: 80px;
+  align-items: start;
+}
+
+.booking-info h3 {
+  font-family: var(--font-display);
+  font-size: 1.8rem;
+  font-weight: 300;
+  color: var(--text);
+  margin-bottom: 1rem;
+}
+
+.booking-info p {
+  color: var(--text-muted);
+  line-height: 1.8;
+  font-size: 0.9rem;
+  margin-bottom: 2rem;
+}
+
+.contact-methods { display: flex; flex-direction: column; gap: 12px; }
+
+.contact-method {
+  display: flex;
+  align-items: center;
+  gap: 14px;
+  padding: 16px 20px;
+  background: var(--bg-card);
+  border: 1px solid var(--border);
+  border-radius: var(--radius-card);
+  text-decoration: none;
+  color: var(--text);
+  transition: all 0.3s;
+}
+
+.contact-method:hover {
+  border-color: var(--gold);
+  transform: translateX(6px);
+  box-shadow: var(--glow);
+}
+
+.cm-icon {
+  width: 40px; height: 40px;
+  background: rgba(201,168,76,0.1);
+  border-radius: 8px;
+  display: flex;
+  align-items: center;
+  justify-content: center;
+  font-size: 1.1rem;
+  flex-shrink: 0;
+}
+
+.cm-label {
+  font-size: 0.65rem;
+  letter-spacing: 0.15em;
+  text-transform: uppercase;
+  color: var(--text-sub);
+}
+
+.cm-value {
+  font-size: 0.9rem;
+  color: var(--text);
+  margin-top: 2px;
+  font-weight: 500;
+}
+
+/* Booking Form */
+.booking-form-card {
+  background: var(--bg-card);
+  border: 1px solid var(--border);
+  border-radius: 16px;
+  padding: 44px;
+}
+
+.booking-form-card h3 {
+  font-family: var(--font-display);
+  font-size: 1.6rem;
+  color: var(--text);
+  margin-bottom: 8px;
+}
+
+.booking-form-card p {
+  font-size: 0.82rem;
+  color: var(--text-muted);
+  margin-bottom: 28px;
+}
+
+.form-row { display: grid; grid-template-columns: 1fr 1fr; gap: 16px; }
+
+.form-group {
+  display: flex;
+  flex-direction: column;
+  gap: 8px;
+  margin-bottom: 16px;
+}
+
+.form-group label {
+  font-size: 0.68rem;
+  letter-spacing: 0.15em;
+  text-transform: uppercase;
+  color: var(--text-muted);
+}
+
+.form-group input,
+.form-group select,
+.form-group textarea {
+  background: var(--bg);
+  border: 1px solid var(--border);
+  color: var(--text);
+  padding: 13px 16px;
+  font-family: var(--font-body);
+  font-size: 0.88rem;
+  border-radius: 6px;
+  outline: none;
+  transition: all 0.3s;
+  width: 100%;
+}
+
+.form-group input:focus,
+.form-group select:focus,
+.form-group textarea:focus {
+  border-color: var(--gold);
+  box-shadow: 0 0 0 3px rgba(201,168,76,0.1);
+}
+
+.form-group select option { background: #111; }
+
+.time-slots {
+  display: grid;
+  grid-template-columns: repeat(4, 1fr);
+  gap: 8px;
+  margin-top: 4px;
+}
+
+.time-slot {
+  padding: 9px 6px;
+  text-align: center;
+  font-size: 0.73rem;
+  border: 1px solid var(--border);
+  border-radius: 6px;
+  cursor: pointer;
+  color: var(--text-muted);
+  transition: all 0.2s;
+  background: var(--bg);
+}
+
+.time-slot:hover, .time-slot.selected {
+  border-color: var(--gold);
+  color: var(--gold);
+  background: rgba(201,168,76,0.08);
+}
+
+.time-slot.booked {
+  opacity: 0.3;
+  cursor: not-allowed;
+  text-decoration: line-through;
+}
+
+.btn-submit {
+  width: 100%;
+  background: var(--gold);
+  color: #000;
+  border: none;
+  padding: 16px;
+  font-family: var(--font-body);
+  font-size: 0.8rem;
+  font-weight: 600;
+  letter-spacing: 0.2em;
+  text-transform: uppercase;
+  cursor: pointer;
+  border-radius: 6px;
+  margin-top: 8px;
+  transition: all 0.3s;
+}
+
+.btn-submit:hover {
+  background: var(--gold-light);
+  transform: translateY(-2px);
+  box-shadow: 0 8px 30px rgba(201,168,76,0.3);
+}
+
+/* Booking Confirmation */
+.booking-confirm {
+  display: none;
+  text-align: center;
+  padding: 40px 20px;
+}
+
+.confirm-icon {
+  font-size: 3.5rem;
+  margin-bottom: 16px;
+}
+
+.booking-confirm h4 {
+  font-family: var(--font-display);
+  font-size: 1.6rem;
+  color: var(--gold);
+  margin-bottom: 8px;
+}
+
+.booking-confirm p {
+  color: var(--text-muted);
+  font-size: 0.88rem;
+}
+
+/* ========== MAP ========== */
+#map-section { background: var(--bg2); }
+
+.map-grid {
+  display: grid;
+  grid-template-columns: 1fr 1.6fr;
+  gap: 60px;
+  align-items: center;
+}
+
+.map-details h3 {
+  font-family: var(--font-display);
+  font-size: 1.6rem;
+  color: var(--text);
+  margin-bottom: 20px;
+}
+
+.hours-grid { margin-top: 20px; }
+
+.hours-row {
+  display: flex;
+  justify-content: space-between;
+  padding: 10px 0;
+  border-bottom: 1px solid var(--border);
+  font-size: 0.84rem;
+}
+
+.hours-row .day { color: var(--text-muted); }
+.hours-row .time { color: var(--text); font-weight: 500; }
+.hours-row .closed { color: #ff4444; }
+
+.map-embed {
+  border-radius: 12px;
+  overflow: hidden;
+  border: 1px solid var(--border);
+  height: 380px;
+  background: var(--surface);
+  position: relative;
+}
+
+.map-embed iframe {
+  width: 100%;
+  height: 100%;
+  border: none;
+  filter: grayscale(20%);
+}
+
+.map-actions {
+  display: flex;
+  gap: 12px;
+  flex-wrap: wrap;
+  margin-top: 20px;
+}
+
+/* ========== FOOTER ========== */
+footer {
+  background: var(--bg);
+  border-top: 1px solid var(--border);
+}
+
+.footer-top {
+  max-width: 1300px;
+  margin: 0 auto;
+  padding: 80px 2rem 60px;
+  display: grid;
+  grid-template-columns: 1.5fr 1fr 1fr 1fr;
+  gap: 60px;
+}
+
+.footer-brand .logo-name {
+  font-size: 2rem;
+  display: block;
+  margin-bottom: 4px;
+}
+
+.footer-brand p {
+  color: var(--text-muted);
+  font-size: 0.82rem;
+  line-height: 1.8;
+  margin-top: 16px;
+  max-width: 260px;
+}
+
+.social-links {
+  display: flex;
+  gap: 10px;
+  margin-top: 24px;
+}
+
+.social-link {
+  width: 38px; height: 38px;
+  border: 1px solid var(--border);
+  border-radius: 8px;
+  display: flex;
+  align-items: center;
+  justify-content: center;
+  text-decoration: none;
+  font-size: 1rem;
+  color: var(--text-muted);
+  transition: all 0.3s;
+}
+
+.social-link:hover {
+  border-color: var(--gold);
+  color: var(--gold);
+  transform: translateY(-3px);
+}
+
+.footer-col h4 {
+  font-size: 0.68rem;
+  letter-spacing: 0.25em;
+  text-transform: uppercase;
+  color: var(--gold);
+  margin-bottom: 20px;
+}
+
+.footer-links { list-style: none; display: flex; flex-direction: column; gap: 10px; }
+
+.footer-links a {
+  text-decoration: none;
+  color: var(--text-muted);
+  font-size: 0.84rem;
+  transition: color 0.3s;
+  display: flex;
+  align-items: center;
+  gap: 6px;
+}
+
+.footer-links a::before {
+  content: '→';
+  color: var(--gold);
+  opacity: 0;
+  transform: translateX(-6px);
+  transition: all 0.3s;
+  font-size: 0.7rem;
+}
+
+.footer-links a:hover { color: var(--text); }
+.footer-links a:hover::before { opacity: 1; transform: translateX(0); }
+
+.footer-bottom {
+  border-top: 1px solid var(--border);
+  padding: 24px 2rem;
+  max-width: 1300px;
+  margin: 0 auto;
+  display: flex;
+  justify-content: space-between;
+  align-items: center;
+  flex-wrap: wrap;
+  gap: 12px;
+}
+
+.footer-bottom p {
+  font-size: 0.75rem;
+  color: var(--text-sub);
+}
+
+/* ========== FLOATING BUTTONS ========== */
+.fab-cluster {
+  position: fixed;
+  bottom: 30px;
+  right: 30px;
+  z-index: 900;
+  display: flex;
+  flex-direction: column;
+  gap: 12px;
+  align-items: flex-end;
+}
+
+.fab {
+  width: 52px; height: 52px;
+  border-radius: 50%;
+  display: flex;
+  align-items: center;
+  justify-content: center;
+  font-size: 1.3rem;
+  cursor: pointer;
+  text-decoration: none;
+  border: none;
+  transition: all 0.3s;
+  box-shadow: 0 4px 20px rgba(0,0,0,0.3);
+  position: relative;
+}
+
+.fab-label {
+  position: absolute;
+  right: 62px;
+  background: var(--bg-card);
+  border: 1px solid var(--border);
+  color: var(--text);
+  padding: 6px 12px;
+  border-radius: 6px;
+  font-size: 0.72rem;
+  white-space: nowrap;
+  opacity: 0;
+  transform: translateX(10px);
+  transition: all 0.3s;
+  pointer-events: none;
+}
+
+.fab:hover .fab-label {
+  opacity: 1;
+  transform: translateX(0);
+}
+
+.fab-wa { background: #25D366; color: #fff; }
+.fab-wa:hover { transform: scale(1.1); box-shadow: 0 6px 30px rgba(37,211,102,0.5); }
+
+.fab-call { background: var(--gold); color: #000; }
+.fab-call:hover { transform: scale(1.1); box-shadow: 0 6px 30px rgba(201,168,76,0.5); }
+
+.fab-book { background: var(--text); color: var(--bg); }
+.fab-book:hover { transform: scale(1.1); background: var(--gold); color: #000; }
+
+/* ========== AI CHAT BOT ========== */
+.ai-chat-btn {
+  position: fixed;
+  bottom: 30px;
+  left: 30px;
+  z-index: 900;
+  width: 56px; height: 56px;
+  background: linear-gradient(135deg, var(--gold), var(--gold-dim));
+  border-radius: 50%;
+  display: flex;
+  align-items: center;
+  justify-content: center;
+  cursor: pointer;
+  border: none;
+  font-size: 1.5rem;
+  box-shadow: 0 4px 20px rgba(201,168,76,0.4);
+  transition: all 0.3s;
+  color: #000;
+}
+
+.ai-chat-btn:hover {
+  transform: scale(1.08);
+  box-shadow: 0 8px 40px rgba(201,168,76,0.5);
+}
+
+.ai-chat-btn .ai-pulse {
+  position: absolute;
+  top: 4px; right: 4px;
+  width: 10px; height: 10px;
+  background: #22c55e;
+  border-radius: 50%;
+  border: 2px solid var(--bg);
+  animation: pulse 2s infinite;
+}
+
+/* Chat Window */
+.chat-window {
+  position: fixed;
+  bottom: 100px;
+  left: 30px;
+  width: 360px;
+  background: var(--bg-card);
+  border: 1px solid var(--border);
+  border-radius: 20px;
+  overflow: hidden;
+  z-index: 901;
+  box-shadow: var(--shadow);
+  display: none;
+  flex-direction: column;
+  max-height: 580px;
+  animation: slideUp 0.3s ease;
+}
+
+.chat-window.open { display: flex; }
+
+@keyframes slideUp {
+  from { opacity: 0; transform: translateY(20px); }
+  to { opacity: 1; transform: translateY(0); }
+}
+
+.chat-header {
+  background: linear-gradient(135deg, #0f0f0f, #1a1a1a);
+  padding: 18px 20px;
+  display: flex;
+  align-items: center;
+  gap: 12px;
+  border-bottom: 1px solid var(--border);
+  flex-shrink: 0;
+}
+
+[data-theme="light"] .chat-header { background: linear-gradient(135deg, #f0ebe0, #e8e0d0); }
+[data-theme="warm"] .chat-header { background: linear-gradient(135deg, #201708, #2a1e0a); }
+
+.chat-avatar {
+  width: 40px; height: 40px;
+  border-radius: 50%;
+  background: var(--gold);
+  display: flex;
+  align-items: center;
+  justify-content: center;
+  font-size: 1.2rem;
+  flex-shrink: 0;
+  color: #000;
+}
+
+.chat-header-info h4 {
+  font-size: 0.9rem;
+  font-weight: 500;
+  color: var(--text);
+}
+
+.chat-header-info p {
+  font-size: 0.68rem;
+  color: #22c55e;
+  display: flex;
+  align-items: center;
+  gap: 4px;
+}
+
+.chat-header-info p::before {
+  content: '';
+  width: 5px; height: 5px;
+  border-radius: 50%;
+  background: #22c55e;
+}
+
+.chat-close {
+  margin-left: auto;
+  background: none;
+  border: none;
+  color: var(--text-muted);
+  cursor: pointer;
+  font-size: 1.1rem;
+  padding: 4px;
+}
+
+.chat-tabs {
+  display: flex;
+  border-bottom: 1px solid var(--border);
+  flex-shrink: 0;
+}
+
+.chat-tab {
+  flex: 1;
+  padding: 10px;
+  text-align: center;
+  font-size: 0.68rem;
+  letter-spacing: 0.1em;
+  text-transform: uppercase;
+  color: var(--text-muted);
+  cursor: pointer;
+  border: none;
+  background: none;
+  border-bottom: 2px solid transparent;
+  transition: all 0.3s;
+}
+
+.chat-tab.active {
+  color: var(--gold);
+  border-bottom-color: var(--gold);
+}
+
+.chat-body {
+  flex: 1;
+  overflow-y: auto;
+  padding: 16px;
+  display: flex;
+  flex-direction: column;
+  gap: 12px;
+  scroll-behavior: smooth;
+}
+
+.chat-msg {
+  display: flex;
+  gap: 8px;
+  max-width: 90%;
+}
+
+.chat-msg.user { align-self: flex-end; flex-direction: row-reverse; }
+
+.msg-avatar {
+  width: 28px; height: 28px;
+  border-radius: 50%;
+  background: var(--gold);
+  display: flex;
+  align-items: center;
+  justify-content: center;
+  font-size: 0.75rem;
+  flex-shrink: 0;
+  color: #000;
+}
+
+.msg-avatar.user { background: var(--surface); color: var(--text); }
+
+.msg-bubble {
+  background: var(--surface);
+  border-radius: 12px 12px 12px 2px;
+  padding: 10px 14px;
+  font-size: 0.82rem;
+  color: var(--text);
+  line-height: 1.5;
+}
+
+.chat-msg.user .msg-bubble {
+  background: var(--gold);
+  color: #000;
+  border-radius: 12px 12px 2px 12px;
+}
+
+.chat-quick-replies {
+  display: flex;
+  gap: 6px;
+  flex-wrap: wrap;
+  padding: 0 16px 8px;
+  flex-shrink: 0;
+}
+
+.quick-reply {
+  padding: 6px 12px;
+  border: 1px solid var(--border);
+  border-radius: 12px;
+  font-size: 0.72rem;
+  color: var(--gold);
+  cursor: pointer;
+  background: none;
+  transition: all 0.2s;
+}
+
+.quick-reply:hover {
+  background: rgba(201,168,76,0.1);
+  border-color: var(--gold);
+}
+
+.chat-input-row {
+  display: flex;
+  gap: 8px;
+  padding: 12px 16px;
+  border-top: 1px solid var(--border);
+  flex-shrink: 0;
+}
+
+.chat-input {
+  flex: 1;
+  background: var(--bg);
+  border: 1px solid var(--border);
+  color: var(--text);
+  padding: 10px 14px;
+  border-radius: 20px;
+  font-family: var(--font-body);
+  font-size: 0.82rem;
+  outline: none;
+  transition: border-color 0.3s;
+}
+
+.chat-input:focus { border-color: var(--gold); }
+
+.chat-send {
+  width: 38px; height: 38px;
+  background: var(--gold);
+  border: none;
+  border-radius: 50%;
+  color: #000;
+  font-size: 1rem;
+  cursor: pointer;
+  transition: all 0.3s;
+  display: flex;
+  align-items: center;
+  justify-content: center;
+  flex-shrink: 0;
+}
+
+.chat-send:hover { transform: scale(1.1); background: var(--gold-light); }
+
+/* Typing indicator */
+.typing-indicator {
+  display: flex;
+  gap: 4px;
+  align-items: center;
+  padding: 10px 14px;
+  background: var(--surface);
+  border-radius: 12px 12px 12px 2px;
+  width: fit-content;
+}
+
+.typing-dot {
+  width: 6px; height: 6px;
+  border-radius: 50%;
+  background: var(--text-muted);
+  animation: typingBounce 1.4s ease-in-out infinite;
+}
+
+.typing-dot:nth-child(2) { animation-delay: 0.2s; }
+.typing-dot:nth-child(3) { animation-delay: 0.4s; }
+
+@keyframes typingBounce {
+  0%,60%,100% { transform: translateY(0); }
+  30% { transform: translateY(-6px); }
+}
+
+/* ========== ADMIN MODAL ========== */
+.modal-overlay {
+  position: fixed;
+  inset: 0;
+  background: rgba(0,0,0,0.85);
+  z-index: 2000;
+  display: none;
+  align-items: center;
+  justify-content: center;
+  backdrop-filter: blur(6px);
+  padding: 20px;
+}
+
+.modal-overlay.open { display: flex; }
+
+.modal-card {
+  background: var(--bg-card);
+  border: 1px solid var(--border);
+  border-radius: 20px;
+  width: 100%;
+  max-width: 900px;
+  max-height: 85vh;
+  overflow-y: auto;
+  padding: 40px;
+}
+
+.modal-header {
+  display: flex;
+  justify-content: space-between;
+  align-items: center;
+  margin-bottom: 32px;
+}
+
+.modal-header h2 {
+  font-family: var(--font-display);
+  font-size: 2rem;
+  color: var(--gold);
+}
+
+.modal-close {
+  background: none;
+  border: 1px solid var(--border);
+  color: var(--text-muted);
+  width: 36px; height: 36px;
+  border-radius: 50%;
+  cursor: pointer;
+  font-size: 1.1rem;
+  display: flex;
+  align-items: center;
+  justify-content: center;
+  transition: all 0.3s;
+}
+
+.modal-close:hover { border-color: var(--gold); color: var(--gold); }
+
+.admin-stats {
+  display: grid;
+  grid-template-columns: repeat(4, 1fr);
+  gap: 16px;
+  margin-bottom: 32px;
+}
+
+.admin-stat {
+  background: var(--bg);
+  border: 1px solid var(--border);
+  border-radius: 10px;
+  padding: 20px;
+  text-align: center;
+}
+
+.admin-stat-num {
+  font-family: var(--font-display);
+  font-size: 2rem;
+  color: var(--gold);
+}
+
+.admin-stat-label {
+  font-size: 0.68rem;
+  letter-spacing: 0.15em;
+  text-transform: uppercase;
+  color: var(--text-muted);
+  margin-top: 4px;
+}
+
+.admin-table {
+  width: 100%;
+  border-collapse: collapse;
+  font-size: 0.82rem;
+}
+
+.admin-table th {
+  text-align: left;
+  padding: 12px 16px;
+  font-size: 0.65rem;
+  letter-spacing: 0.2em;
+  text-transform: uppercase;
+  color: var(--gold);
+  border-bottom: 1px solid var(--border);
+}
+
+.admin-table td {
+  padding: 12px 16px;
+  color: var(--text-muted);
+  border-bottom: 1px solid var(--border);
+}
+
+.admin-table tr:hover td { background: var(--surface); }
+
+.status-badge {
+  padding: 3px 10px;
+  border-radius: 12px;
+  font-size: 0.65rem;
+  letter-spacing: 0.1em;
+  text-transform: uppercase;
+}
+
+.status-confirmed { background: rgba(34,197,94,0.1); color: #22c55e; }
+.status-pending { background: rgba(201,168,76,0.15); color: var(--gold); }
+
+/* ========== INSTAGRAM SECTION ========== */
+#instagram { background: var(--bg3); }
+
+.insta-grid {
+  display: grid;
+  grid-template-columns: repeat(5, 1fr);
+  gap: 12px;
+  margin-top: 40px;
+}
+
+.insta-placeholder {
+  aspect-ratio: 1;
+  background: var(--surface);
+  border-radius: 8px;
+  overflow: hidden;
+  position: relative;
+  cursor: pointer;
+  transition: all 0.3s;
+}
+
+.insta-placeholder:hover { transform: scale(1.03); }
+
+.insta-placeholder::after {
+  content: '📸';
+  position: absolute;
+  inset: 0;
+  display: flex;
+  align-items: center;
+  justify-content: center;
+  font-size: 2rem;
+  opacity: 0.2;
+}
+
+.insta-overlay {
+  position: absolute;
+  inset: 0;
+  background: rgba(201,168,76,0.85);
+  display: flex;
+  align-items: center;
+  justify-content: center;
+  font-size: 0.75rem;
+  letter-spacing: 0.15em;
+  text-transform: uppercase;
+  color: #000;
+  font-weight: 600;
+  opacity: 0;
+  transition: opacity 0.3s;
+}
+
+.insta-placeholder:hover .insta-overlay { opacity: 1; }
+
+/* Gradient backgrounds for insta placeholders */
+.ig1 { background: linear-gradient(135deg, #2c1a0e, #4a2e12); }
+.ig2 { background: linear-gradient(135deg, #1a0e2c, #2e124a); }
+.ig3 { background: linear-gradient(135deg, #0e2c1a, #124a2e); }
+.ig4 { background: linear-gradient(135deg, #2c1a1a, #4a1212); }
+.ig5 { background: linear-gradient(135deg, #1a2c2c, #124a4a); }
+
+/* ========== SCROLL REVEAL ========== */
+.reveal {
+  opacity: 0;
+  transform: translateY(40px);
+  transition: opacity 0.7s ease, transform 0.7s ease;
+}
+
+.reveal.visible {
+  opacity: 1;
+  transform: translateY(0);
+}
+
+/* ========== PROGRESS BAR ========== */
+#progress-bar {
+  position: fixed;
+  top: 70px;
+  left: 0;
+  height: 2px;
+  background: var(--gold);
+  z-index: 999;
+  transition: width 0.1s linear;
+  box-shadow: 0 0 8px rgba(201,168,76,0.6);
+}
+
+/* ========== MOBILE MENU ========== */
+.mobile-menu {
+  position: fixed;
+  inset: 0;
+  background: var(--bg);
+  z-index: 999;
+  display: none;
+  flex-direction: column;
+  align-items: center;
+  justify-content: center;
+  gap: 2.5rem;
+}
+
+.mobile-menu.open { display: flex; }
+
+.mobile-menu a {
+  font-family: var(--font-display);
+  font-size: 2.5rem;
+  font-weight: 300;
+  color: var(--text);
+  text-decoration: none;
+  transition: color 0.3s;
+}
+
+.mobile-menu a:hover { color: var(--gold); }
+
+/* ========== BACK TO TOP ========== */
+#back-top {
+  position: fixed;
+  bottom: 100px;
+  right: 30px;
+  width: 40px; height: 40px;
+  background: var(--bg-card);
+  border: 1px solid var(--border);
+  border-radius: 50%;
+  display: none;
+  align-items: center;
+  justify-content: center;
+  color: var(--gold);
+  cursor: pointer;
+  z-index: 800;
+  transition: all 0.3s;
+  font-size: 1.1rem;
+}
+
+#back-top.visible { display: flex; }
+#back-top:hover { background: var(--gold); color: #000; }
+
+/* ========== ADMIN LOGIN ========== */
+.admin-login-form {
+  max-width: 400px;
+  margin: 0 auto;
+}
+
+.admin-login-form input {
+  width: 100%;
+  background: var(--bg);
+  border: 1px solid var(--border);
+  color: var(--text);
+  padding: 13px 16px;
+  font-family: var(--font-body);
+  font-size: 0.88rem;
+  border-radius: 6px;
+  outline: none;
+  transition: all 0.3s;
+  margin-bottom: 12px;
+}
+
+.admin-login-form input:focus { border-color: var(--gold); }
+
+/* ========== RESPONSIVE ========== */
+@media (max-width: 1024px) {
+  .about-grid { grid-template-columns: 1fr; gap: 40px; }
+  .about-visual { max-width: 500px; margin: 0 auto; }
+  .services-intro { grid-template-columns: 1fr; gap: 20px; }
+  .services-filter { justify-content: flex-start; }
+  .services-grid { grid-template-columns: repeat(2, 1fr); }
+  .booking-wrap { grid-template-columns: 1fr; gap: 40px; }
+  .map-grid { grid-template-columns: 1fr; }
+  .testimonials-grid { grid-template-columns: 1fr 1fr; }
+  .process-steps { grid-template-columns: repeat(2, 1fr); }
+  .process-steps::before { display: none; }
+  .footer-top { grid-template-columns: 1fr 1fr; gap: 40px; }
+  .admin-stats { grid-template-columns: repeat(2, 1fr); }
+  .insta-grid { grid-template-columns: repeat(3, 1fr); }
+  .hero-visual { display: none; }
+}
+
+@media (max-width: 768px) {
+  .nav-links { display: none; }
+  .btn-nav-book { display: none; }
+  .hamburger { display: flex; }
+  .services-grid { grid-template-columns: 1fr; }
+  .testimonials-grid { grid-template-columns: 1fr; }
+  .process-steps { grid-template-columns: 1fr 1fr; }
+  .footer-top { grid-template-columns: 1fr; gap: 32px; }
+  .booking-form-card { padding: 24px; }
+  .form-row { grid-template-columns: 1fr; }
+  .time-slots { grid-template-columns: repeat(3, 1fr); }
+  .hero-title { font-size: clamp(2.8rem, 9vw, 5rem); }
+  .chat-window { left: 12px; right: 12px; width: auto; }
+  .insta-grid { grid-template-columns: repeat(2, 1fr); }
+  .about-img-accent { display: none; }
+  .footer-bottom { flex-direction: column; text-align: center; }
+}
+
+@media (max-width: 480px) {
+  .section-inner { padding: 70px 1.2rem; }
+  .hero-stats { gap: 1.5rem; }
+  .admin-stats { grid-template-columns: 1fr 1fr; }
+  .fab-cluster { bottom: 20px; right: 16px; }
+  .ai-chat-btn { bottom: 20px; left: 16px; }
+}
+
+/* ========== DECORATIVE ========== */
+.gold-line {
+  width: 60px;
+  height: 1px;
+  background: var(--gold);
+  margin: 24px 0;
+}
+
+.section-divider {
+  height: 1px;
+  background: linear-gradient(90deg, transparent, var(--border), transparent);
+}
+
+/* Noise texture overlay */
+body::before {
+  content: '';
+  position: fixed;
+  inset: 0;
+  background-image: url("data:image/svg+xml,%3Csvg viewBox='0 0 256 256' xmlns='http://www.w3.org/2000/svg'%3E%3Cfilter id='noise'%3E%3CfeTurbulence type='fractalNoise' baseFrequency='0.9' numOctaves='4' stitchTiles='stitch'/%3E%3C/filter%3E%3Crect width='100%25' height='100%25' filter='url(%23noise)' opacity='0.03'/%3E%3C/svg%3E");
+  pointer-events: none;
+  z-index: 9999;
+  opacity: 0.4;
+}
+</style>
+</head>
+<body>
+
+<!-- Progress Bar -->
+<div id="progress-bar" style="width:0%"></div>
+
+<!-- ========== NAV ========== -->
+<nav id="navbar">
+  <div class="nav-inner">
+    <a href="#hero" class="logo" style="text-decoration:none">
+      <span class="logo-name">Stylopia</span>
+      <span class="logo-sub">Hair Studio · Nagpur</span>
+    </a>
+    <ul class="nav-links">
+      <li><a href="#about">About</a></li>
+      <li><a href="#services">Services</a></li>
+      <li><a href="#booking">Book</a></li>
+      <li><a href="#testimonials">Reviews</a></li>
+      <li><a href="#map-section">Visit</a></li>
+      <li><a href="#" onclick="openAdmin()">Admin</a></li>
+    </ul>
+    <div class="nav-right">
+      <div class="theme-switcher">
+        <button class="theme-btn active" onclick="setTheme('dark', this)">Dark</button>
+        <button class="theme-btn" onclick="setTheme('light', this)">Light</button>
+        <button class="theme-btn" onclick="setTheme('warm', this)">Warm</button>
+      </div>
+      <a href="#booking" class="btn-nav-book">Book Now</a>
+      <button class="hamburger" id="hamburger" onclick="toggleMenu()">
+        <span></span><span></span><span></span>
+      </button>
+    </div>
+  </div>
+</nav>
+
+<!-- Mobile Menu -->
+<div class="mobile-menu" id="mobile-menu">
+  <a href="#about" onclick="toggleMenu()">About</a>
+  <a href="#services" onclick="toggleMenu()">Services</a>
+  <a href="#booking" onclick="toggleMenu()">Book Now</a>
+  <a href="#testimonials" onclick="toggleMenu()">Reviews</a>
+  <a href="#map-section" onclick="toggleMenu()">Visit</a>
+  <a href="tel:+919226539619" onclick="toggleMenu()">📞 Call</a>
+</div>
+
+<!-- ========== HERO ========== -->
+<section id="hero">
+  <canvas id="hero-canvas"></canvas>
+  <div class="hero-overlay"></div>
+  <div class="hero-grid-lines"></div>
+
+  <div class="hero-content">
+    <div class="hero-badge">
+      <span>Nagpur's Premier Hair Studio</span>
+    </div>
+
+    <h1 class="hero-title">
+      Where Art Meets
+      <em class="line2">Your Hair</em>
+    </h1>
+
+    <p class="hero-sub">
+      Transform your look with Nagpur's most exclusive hair studio. Expert artisans, luxury products, and a space designed for your metamorphosis.
+    </p>
+
+    <div class="hero-cta-row">
+      <a href="#booking" class="btn-primary">
+        ✦ Book Appointment
+      </a>
+      <a href="tel:+919226539619" class="btn-ghost">
+        ☎ Call Now
+      </a>
+      <a href="https://maps.app.goo.gl/GLdZZG6pajjiAJhKA" target="_blank" class="btn-ghost">
+        ⟳ Get Directions
+      </a>
+    </div>
+
+    <div class="hero-stats">
+      <div class="stat-item">
+        <span class="stat-num">8+</span>
+        <span class="stat-label">Years of Excellence</span>
+      </div>
+      <div class="stat-item">
+        <span class="stat-num">5K+</span>
+        <span class="stat-label">Happy Clients</span>
+      </div>
+      <div class="stat-item">
+        <span class="stat-num">30+</span>
+        <span class="stat-label">Premium Services</span>
+      </div>
+      <div class="stat-item">
+        <span class="stat-num">4.9★</span>
+        <span class="stat-label">Google Rating</span>
+      </div>
+    </div>
+  </div>
+
+  <!-- Floating Info Cards -->
+  <div class="hero-visual">
+    <div class="floating-card float-card-1">
+      <div class="float-card-label">Today's Openings</div>
+      <div class="float-card-value">6 Slots</div>
+      <div class="float-card-sub">Available today</div>
+    </div>
+    <div class="floating-card float-card-2">
+      <div class="float-card-label">Rating</div>
+      <div class="float-card-value">4.9 ⭐</div>
+      <div class="float-card-sub">Google Reviews</div>
+    </div>
+    <div class="floating-card float-card-3">
+      <div class="float-card-label">Next Available</div>
+      <div class="float-card-value">11:00 AM</div>
+      <div class="float-card-sub">Book instantly</div>
+    </div>
+  </div>
+</section>
+
+<!-- ========== MARQUEE ========== -->
+<div class="marquee-section">
+  <div class="marquee-track" id="marquee">
+    <div class="marquee-item"><span>✦</span> Hair Cutting</div>
+    <div class="marquee-item"><span>✦</span> Keratin Treatment</div>
+    <div class="marquee-item"><span>✦</span> Balayage & Highlights</div>
+    <div class="marquee-item"><span>✦</span> Hair Coloring</div>
+    <div class="marquee-item"><span>✦</span> Bridal Styling</div>
+    <div class="marquee-item"><span>✦</span> Smoothing Therapy</div>
+    <div class="marquee-item"><span>✦</span> Hair Spa</div>
+    <div class="marquee-item"><span>✦</span> Scalp Treatment</div>
+    <div class="marquee-item"><span>✦</span> Hair Cutting</div>
+    <div class="marquee-item"><span>✦</span> Keratin Treatment</div>
+    <div class="marquee-item"><span>✦</span> Balayage & Highlights</div>
+    <div class="marquee-item"><span>✦</span> Hair Coloring</div>
+    <div class="marquee-item"><span>✦</span> Bridal Styling</div>
+    <div class="marquee-item"><span>✦</span> Smoothing Therapy</div>
+    <div class="marquee-item"><span>✦</span> Hair Spa</div>
+    <div class="marquee-item"><span>✦</span> Scalp Treatment</div>
+  </div>
+</div>
+
+<!-- ========== ABOUT ========== -->
+<section id="about">
+  <div class="section-inner">
+    <div class="about-grid">
+      <div class="about-visual reveal">
+        <div class="about-img-main">
+          <img src="https://images.unsplash.com/photo-1562322140-8baeececf3df?w=600&q=80" alt="Stylopia Hair Studio Interior" loading="lazy">
+        </div>
+        <div class="about-img-accent">
+          <img src="https://images.unsplash.com/photo-1605497788044-5a32c7078486?w=300&q=80" alt="Luxury Hair Treatment" loading="lazy">
+        </div>
+        <div class="about-experience-badge">
+          <span class="num">8+</span>
+          <span class="lbl">Years Expert</span>
+        </div>
+      </div>
+
+      <div class="about-text reveal">
+        <div class="section-label">Our Story</div>
+        <h2 class="section-title">
+          Crafted for Those Who<br><em>Demand the Best</em>
+        </h2>
+        <div class="gold-line"></div>
+        <p>
+          Stylopia Hair Studio was born from a singular vision — to create a space where every client leaves not just looking better, but feeling transformed. Located in the heart of Sitabuldi, Nagpur, we've spent years perfecting the art of hair.
+        </p>
+        <p>
+          Our team of master stylists are trained in the latest global techniques, from precision cuts to complex color work, backed by luxury product lines that protect and nourish your hair.
+        </p>
+
+        <div class="about-pillars">
+          <div class="pillar">
+            <div class="pillar-icon">💎</div>
+            <div class="pillar-name">Luxury Products</div>
+            <div class="pillar-desc">International brands, premium quality</div>
+          </div>
+          <div class="pillar">
+            <div class="pillar-icon">🎨</div>
+            <div class="pillar-name">Expert Artisans</div>
+            <div class="pillar-desc">Trained, certified stylists</div>
+          </div>
+          <div class="pillar">
+            <div class="pillar-icon">✨</div>
+            <div class="pillar-name">Personalized Care</div>
+            <div class="pillar-desc">Tailored to your unique hair</div>
+          </div>
+          <div class="pillar">
+            <div class="pillar-icon">🏆</div>
+            <div class="pillar-name">Proven Results</div>
+            <div class="pillar-desc">5000+ satisfied clients</div>
+          </div>
+        </div>
+      </div>
+    </div>
+  </div>
+</section>
+
+<!-- ========== SERVICES ========== -->
+<section id="services">
+  <div class="section-inner">
+    <div class="services-intro">
+      <div class="services-intro-text">
+        <div class="section-label">What We Offer</div>
+        <h2 class="section-title">Premium <em>Services</em></h2>
+        <div class="gold-line"></div>
+        <p>Every service is a ritual. We combine skill, technique, and premium products to deliver results that speak for themselves.</p>
+      </div>
+      <div class="services-filter">
+        <button class="filter-btn active" onclick="filterServices('all', this)">All</button>
+        <button class="filter-btn" onclick="filterServices('cut', this)">Cuts</button>
+        <button class="filter-btn" onclick="filterServices('color', this)">Color</button>
+        <button class="filter-btn" onclick="filterServices('treat', this)">Treatments</button>
+        <button class="filter-btn" onclick="filterServices('style', this)">Styling</button>
+      </div>
+    </div>
+
+    <div class="services-grid reveal" id="services-grid">
+      <div class="service-card" data-cat="cut">
+        <div class="service-num">01</div>
+        <div class="service-name">Precision Hair Cut</div>
+        <div class="service-desc">Expert cuts crafted to your face shape, lifestyle, and personal style. Every snip, intentional.</div>
+        <div class="service-price">From ₹300 <small>onwards</small></div>
+        <div class="service-arrow">→</div>
+      </div>
+      <div class="service-card" data-cat="treat">
+        <div class="service-num">02</div>
+        <div class="service-name">Keratin Treatment</div>
+        <div class="service-desc">Brazilian keratin that eliminates frizz, adds shine, and gives you silky-smooth hair for months.</div>
+        <div class="service-price">From ₹2,500 <small>onwards</small></div>
+        <div class="service-arrow">→</div>
+      </div>
+      <div class="service-card" data-cat="color">
+        <div class="service-num">03</div>
+        <div class="service-name">Balayage & Highlights</div>
+        <div class="service-desc">Sun-kissed dimension and natural-looking color. The art of hand-painted perfection.</div>
+        <div class="service-price">From ₹1,800 <small>onwards</small></div>
+        <div class="service-arrow">→</div>
+      </div>
+      <div class="service-card" data-cat="color">
+        <div class="service-num">04</div>
+        <div class="service-name">Global Hair Coloring</div>
+        <div class="service-desc">Full, rich, vibrant color using premium ammonia-free formulations that protect your hair.</div>
+        <div class="service-price">From ₹800 <small>onwards</small></div>
+        <div class="service-arrow">→</div>
+      </div>
+      <div class="service-card" data-cat="treat">
+        <div class="service-num">05</div>
+        <div class="service-name">Smoothing Therapy</div>
+        <div class="service-desc">Advanced protein therapy that restructures hair bonds for lasting smoothness and manageability.</div>
+        <div class="service-price">From ₹1,500 <small>onwards</small></div>
+        <div class="service-arrow">→</div>
+      </div>
+      <div class="service-card" data-cat="style">
+        <div class="service-num">06</div>
+        <div class="service-name">Bridal Hair Styling</div>
+        <div class="service-desc">Your most important day deserves perfection. Timeless styles that last from ceremony to celebration.</div>
+        <div class="service-price">From ₹2,000 <small>onwards</small></div>
+        <div class="service-arrow">→</div>
+      </div>
+      <div class="service-card" data-cat="treat">
+        <div class="service-num">07</div>
+        <div class="service-name">Luxury Hair Spa</div>
+        <div class="service-desc">Deep conditioning ritual with scalp massage, protein masks, and steam treatment for ultimate restoration.</div>
+        <div class="service-price">From ₹600 <small>onwards</small></div>
+        <div class="service-arrow">→</div>
+      </div>
+      <div class="service-card" data-cat="treat">
+        <div class="service-num">08</div>
+        <div class="service-name">Scalp Treatment</div>
+        <div class="service-desc">Advanced scalp analysis and targeted therapy for dandruff, hair fall, and scalp health restoration.</div>
+        <div class="service-price">From ₹700 <small>onwards</small></div>
+        <div class="service-arrow">→</div>
+      </div>
+      <div class="service-card" data-cat="style">
+        <div class="service-num">09</div>
+        <div class="service-name">Party & Event Styling</div>
+        <div class="service-desc">Show-stopping styles for weddings, parties, and every occasion worth celebrating.</div>
+        <div class="service-price">From ₹500 <small>onwards</small></div>
+        <div class="service-arrow">→</div>
+      </div>
+    </div>
+  </div>
+</section>
+
+<!-- ========== PROCESS ========== -->
+<section id="process">
+  <div class="section-inner">
+    <div style="text-align:center">
+      <div class="section-label" style="justify-content:center">How It Works</div>
+      <h2 class="section-title" style="max-width:500px;margin:0 auto 12px">The <em>Stylopia</em> Experience</h2>
+    </div>
+    <div class="process-steps reveal">
+      <div class="process-step">
+        <div class="step-num">01</div>
+        <div class="step-title">Book Online</div>
+        <div class="step-desc">Choose your service, select a time slot, and confirm in under 2 minutes.</div>
+      </div>
+      <div class="process-step">
+        <div class="step-num">02</div>
+        <div class="step-title">Consultation</div>
+        <div class="step-desc">Our stylist analyzes your hair and discusses your vision and lifestyle needs.</div>
+      </div>
+      <div class="process-step">
+        <div class="step-num">03</div>
+        <div class="step-title">The Service</div>
+        <div class="step-desc">Relax in luxury while our experts work their magic with premium products.</div>
+      </div>
+      <div class="process-step">
+        <div class="step-num">04</div>
+        <div class="step-title">Transform</div>
+        <div class="step-desc">Leave with a look that turns heads and confidence that lasts.</div>
+      </div>
+    </div>
+  </div>
+</section>
+
+<!-- ========== TESTIMONIALS ========== -->
+<section id="testimonials">
+  <div class="section-inner">
+    <div class="section-label">Client Stories</div>
+    <h2 class="section-title">What Our <em>Clients Say</em></h2>
+    <div class="testimonials-grid reveal">
+      <div class="testimonial-card">
+        <div class="stars">★★★★★</div>
+        <p class="review-text">"Got a keratin treatment and balayage here — honestly the best decision I've made. The results lasted 4 months and people still compliment my hair. Worth every rupee."</p>
+        <div class="reviewer">
+          <div class="reviewer-avatar">P</div>
+          <div>
+            <div class="reviewer-name">Priya Sharma</div>
+            <div class="reviewer-location">Sitabuldi, Nagpur</div>
+          </div>
+        </div>
+      </div>
+      <div class="testimonial-card">
+        <div class="stars">★★★★★</div>
+        <p class="review-text">"My bridal hair was absolutely stunning. The team understood exactly what I wanted and delivered beyond expectations. My photos looked like a magazine shoot."</p>
+        <div class="reviewer">
+          <div class="reviewer-avatar">A</div>
+          <div>
+            <div class="reviewer-name">Anjali Mehta</div>
+            <div class="reviewer-location">Dharampeth, Nagpur</div>
+          </div>
+        </div>
+      </div>
+      <div class="testimonial-card">
+        <div class="stars">★★★★★</div>
+        <p class="review-text">"Been going to Stylopia for 2 years now. Best haircuts I've ever had — they actually listen to what you want. The vibe inside is super premium too."</p>
+        <div class="reviewer">
+          <div class="reviewer-avatar">R</div>
+          <div>
+            <div class="reviewer-name">Rahul Deshmukh</div>
+            <div class="reviewer-location">Mahal, Nagpur</div>
+          </div>
+        </div>
+      </div>
+      <div class="testimonial-card">
+        <div class="stars">★★★★★</div>
+        <p class="review-text">"The hair spa experience here is something else. Walked in stressed, walked out feeling like a new person. The scalp massage alone is worth it."</p>
+        <div class="reviewer">
+          <div class="reviewer-avatar">N</div>
+          <div>
+            <div class="reviewer-name">Neha Waghmare</div>
+            <div class="reviewer-location">Ramdaspeth, Nagpur</div>
+          </div>
+        </div>
+      </div>
+      <div class="testimonial-card">
+        <div class="stars">★★★★★</div>
+        <p class="review-text">"Tried balayage for the first time here. Was scared but the stylist was so reassuring. The color looks incredibly natural. Couldn't be happier with the results."</p>
+        <div class="reviewer">
+          <div class="reviewer-avatar">S</div>
+          <div>
+            <div class="reviewer-name">Shruti Yadav</div>
+            <div class="reviewer-location">Civil Lines, Nagpur</div>
+          </div>
+        </div>
+      </div>
+      <div class="testimonial-card">
+        <div class="stars">★★★★★</div>
+        <p class="review-text">"Online booking system is so convenient. Walked in exactly on time, zero waiting. Professional setup, expert team. This is what a premium salon should feel like."</p>
+        <div class="reviewer">
+          <div class="reviewer-avatar">V</div>
+          <div>
+            <div class="reviewer-name">Vikram Patel</div>
+            <div class="reviewer-location">Sitabuldi, Nagpur</div>
+          </div>
+        </div>
+      </div>
+    </div>
+  </div>
+</section>
+
+<!-- ========== BOOKING ========== -->
+<section id="booking">
+  <div class="section-inner">
+    <div class="booking-wrap">
+      <div class="booking-info reveal">
+        <div class="section-label">Book Your Visit</div>
+        <h2 class="section-title">Reserve Your <em>Seat</em></h2>
+        <div class="gold-line"></div>
+        <h3>Your Transformation Awaits</h3>
+        <p>Book your appointment online in minutes. Choose your service, pick a time that works for you, and let us handle the rest. We'll confirm your booking instantly.</p>
+
+        <div class="contact-methods">
+          <a href="tel:+919226539619" class="contact-method">
+            <div class="cm-icon">📞</div>
+            <div>
+              <div class="cm-label">Call Us</div>
+              <div class="cm-value">+91 92265 39619</div>
+            </div>
+          </a>
+          <a href="https://wa.me/919226539619?text=Hi! I'd like to book an appointment at Stylopia." class="contact-method" target="_blank">
+            <div class="cm-icon">💬</div>
+            <div>
+              <div class="cm-label">WhatsApp</div>
+              <div class="cm-value">Chat & Book Instantly</div>
+            </div>
+          </a>
+          <a href="mailto:stylopiahairstudio@gmail.com" class="contact-method">
+            <div class="cm-icon">✉</div>
+            <div>
+              <div class="cm-label">Email Us</div>
+              <div class="cm-value">stylopiahairstudio@gmail.com</div>
+            </div>
+          </a>
+          <a href="https://maps.app.goo.gl/GLdZZG6pajjiAJhKA" target="_blank" class="contact-method">
+            <div class="cm-icon">📍</div>
+            <div>
+              <div class="cm-label">Address</div>
+              <div class="cm-value">41/26, 1F, Jhansi Rani Square, Sitabuldi</div>
+            </div>
+          </a>
+        </div>
+      </div>
+
+      <div class="reveal">
+        <div class="booking-form-card" id="booking-form-card">
+          <h3>Book Appointment</h3>
+          <p>Select your service and preferred time slot</p>
+
+          <div class="form-row">
+            <div class="form-group">
+              <label>First Name</label>
+              <input type="text" id="fname" placeholder="Priya" required>
+            </div>
+            <div class="form-group">
+              <label>Last Name</label>
+              <input type="text" id="lname" placeholder="Sharma">
+            </div>
+          </div>
+
+          <div class="form-row">
+            <div class="form-group">
+              <label>Phone Number</label>
+              <input type="tel" id="phone" placeholder="+91 98765 43210" required>
+            </div>
+            <div class="form-group">
+              <label>Email (Optional)</label>
+              <input type="email" id="email" placeholder="priya@email.com">
+            </div>
+          </div>
+
+          <div class="form-group">
+            <label>Select Service</label>
+            <select id="service-select">
+              <option value="">— Choose a Service —</option>
+              <option value="Precision Hair Cut">✂ Precision Hair Cut (from ₹300)</option>
+              <option value="Keratin Treatment">💎 Keratin Treatment (from ₹2,500)</option>
+              <option value="Balayage & Highlights">🎨 Balayage & Highlights (from ₹1,800)</option>
+              <option value="Global Hair Coloring">🌈 Global Hair Coloring (from ₹800)</option>
+              <option value="Smoothing Therapy">✨ Smoothing Therapy (from ₹1,500)</option>
+              <option value="Bridal Hair Styling">👰 Bridal Hair Styling (from ₹2,000)</option>
+              <option value="Luxury Hair Spa">🌿 Luxury Hair Spa (from ₹600)</option>
+              <option value="Scalp Treatment">🔬 Scalp Treatment (from ₹700)</option>
+              <option value="Party Styling">🎉 Party & Event Styling (from ₹500)</option>
+            </select>
+          </div>
+
+          <div class="form-group">
+            <label>Preferred Date</label>
+            <input type="date" id="booking-date" onchange="generateSlots()">
+          </div>
+
+          <div class="form-group">
+            <label>Select Time Slot</label>
+            <div class="time-slots" id="time-slots">
+              <div style="color:var(--text-muted);font-size:0.78rem;grid-column:1/-1;">Select a date to see available slots</div>
+            </div>
+          </div>
+
+          <div class="form-group">
+            <label>Special Notes</label>
+            <textarea id="notes" rows="2" placeholder="Any specific requirements or hair concerns..." style="resize:none"></textarea>
+          </div>
+
+          <button class="btn-submit" onclick="submitBooking()">
+            ✦ Confirm Appointment
+          </button>
+        </div>
+
+        <!-- Confirmation View -->
+        <div class="booking-form-card booking-confirm" id="booking-confirm">
+          <div class="confirm-icon">✅</div>
+          <h4>Appointment Confirmed!</h4>
+          <p id="confirm-text">Your appointment has been successfully booked. We'll send a confirmation to your phone via WhatsApp.</p>
+          <div style="margin-top:24px;padding:20px;background:var(--bg);border-radius:10px;border:1px solid var(--border);text-align:left" id="confirm-details"></div>
+          <button class="btn-primary" style="margin-top:24px;border:none;cursor:pointer;width:100%;justify-content:center" onclick="resetBooking()">Book Another Appointment</button>
+        </div>
+      </div>
+    </div>
+  </div>
+</section>
+
+<!-- ========== INSTAGRAM ========== -->
+<section id="instagram">
+  <div class="section-inner">
+    <div style="display:flex;justify-content:space-between;align-items:flex-end;flex-wrap:wrap;gap:20px">
+      <div>
+        <div class="section-label">Social Feed</div>
+        <h2 class="section-title">Follow Our <em>Work</em></h2>
+      </div>
+      <a href="https://www.instagram.com/stylopiahairstudio_" target="_blank" class="btn-ghost" style="font-size:0.75rem">
+        📸 @stylopiahairstudio_
+      </a>
+    </div>
+    <div class="insta-grid reveal">
+      <div class="insta-placeholder ig1"><div class="insta-overlay">View on Instagram</div></div>
+      <div class="insta-placeholder ig2"><div class="insta-overlay">View on Instagram</div></div>
+      <div class="insta-placeholder ig3"><div class="insta-overlay">View on Instagram</div></div>
+      <div class="insta-placeholder ig4"><div class="insta-overlay">View on Instagram</div></div>
+      <div class="insta-placeholder ig5"><div class="insta-overlay">View on Instagram</div></div>
+    </div>
+  </div>
+</section>
+
+<!-- ========== MAP ========== -->
+<section id="map-section">
+  <div class="section-inner">
+    <div class="map-grid">
+      <div class="reveal">
+        <div class="section-label">Find Us</div>
+        <h2 class="section-title">Visit <em>Stylopia</em></h2>
+        <div class="gold-line"></div>
+        <h3>Location & Hours</h3>
+        <p style="color:var(--text-muted);margin-top:8px;font-size:0.88rem;line-height:1.8">
+          41/26, 1st Floor, Jhansi Rani Square<br>
+          Behind Nilawar Sadi Center<br>
+          Sitabuldi, Nagpur, Maharashtra 440010
+        </p>
+
+        <div class="hours-grid">
+          <div class="hours-row"><span class="day">Monday — Friday</span><span class="time">9:00 AM – 8:00 PM</span></div>
+          <div class="hours-row"><span class="day">Saturday</span><span class="time">8:30 AM – 9:00 PM</span></div>
+          <div class="hours-row"><span class="day">Sunday</span><span class="time">10:00 AM – 6:00 PM</span></div>
+        </div>
+
+        <div class="map-actions" style="margin-top:24px">
+          <a href="https://maps.app.goo.gl/GLdZZG6pajjiAJhKA" target="_blank" class="btn-primary" style="font-size:0.75rem;padding:12px 24px">
+            📍 Get Directions
+          </a>
+          <a href="tel:+919226539619" class="btn-ghost" style="font-size:0.75rem;padding:12px 24px">
+            📞 Call Studio
+          </a>
+        </div>
+      </div>
+
+      <div class="map-embed reveal">
+        <iframe
+          src="https://www.google.com/maps/embed?pb=!1m18!1m12!1m3!1d3721.6!2d79.079!3d21.148!2m3!1f0!2f0!3f0!3m2!1i1024!2i768!4f13.1!3m3!1m2!1s0x0%3A0x0!2zMjHCsDA4JzUyLjgiTiA3OcKwMDQnNDQuNCJF!5e0!3m2!1sen!2sin!4v1234567890"
+          allowfullscreen=""
+          loading="lazy"
+          title="Stylopia Hair Studio Location">
+        </iframe>
+      </div>
+    </div>
+  </div>
+</section>
+
+<!-- ========== FOOTER ========== -->
+<footer>
+  <div class="footer-top">
+    <div class="footer-brand">
+      <span class="logo-name" style="font-family:var(--font-display);font-size:2rem;color:var(--gold)">Stylopia</span>
+      <span style="font-size:0.6rem;letter-spacing:0.3em;text-transform:uppercase;color:var(--text-muted)">Hair Studio</span>
+      <p>Nagpur's most exclusive hair studio, where expert craftsmanship meets luxury experience. Transform your look, elevate your confidence.</p>
+      <div class="social-links">
+        <a href="https://www.instagram.com/stylopiahairstudio_" target="_blank" class="social-link" title="Instagram">📸</a>
+        <a href="https://wa.me/919226539619" target="_blank" class="social-link" title="WhatsApp">💬</a>
+        <a href="tel:+919226539619" class="social-link" title="Call">📞</a>
+        <a href="https://maps.app.goo.gl/GLdZZG6pajjiAJhKA" target="_blank" class="social-link" title="Location">📍</a>
+      </div>
+    </div>
+
+    <div class="footer-col">
+      <h4>Services</h4>
+      <ul class="footer-links">
+        <li><a href="#services">Hair Cutting</a></li>
+        <li><a href="#services">Keratin Treatment</a></li>
+        <li><a href="#services">Balayage</a></li>
+        <li><a href="#services">Hair Coloring</a></li>
+        <li><a href="#services">Hair Spa</a></li>
+        <li><a href="#services">Bridal Styling</a></li>
+      </ul>
+    </div>
+
+    <div class="footer-col">
+      <h4>Quick Links</h4>
+      <ul class="footer-links">
+        <li><a href="#about">About Us</a></li>
+        <li><a href="#booking">Book Appointment</a></li>
+        <li><a href="#testimonials">Reviews</a></li>
+        <li><a href="#map-section">Find Us</a></li>
+        <li><a href="https://www.instagram.com/stylopiahairstudio_" target="_blank">Instagram</a></li>
+      </ul>
+    </div>
+
+    <div class="footer-col">
+      <h4>Contact</h4>
+      <ul class="footer-links" style="gap:14px">
+        <li style="flex-direction:column;align-items:flex-start">
+          <span style="color:var(--gold);font-size:0.65rem;letter-spacing:0.2em;text-transform:uppercase">Phone</span>
+          <a href="tel:+919226539619" style="font-size:0.9rem">+91 92265 39619</a>
+        </li>
+        <li style="flex-direction:column;align-items:flex-start">
+          <span style="color:var(--gold);font-size:0.65rem;letter-spacing:0.2em;text-transform:uppercase">Address</span>
+          <span style="color:var(--text-muted);font-size:0.8rem;line-height:1.6">41/26, 1F, Jhansi Rani Square,<br>Sitabuldi, Nagpur 440010</span>
+        </li>
+      </ul>
+    </div>
+  </div>
+
+  <div class="footer-bottom">
+    <p>© 2025 Stylopia Hair Studio. All rights reserved. Crafted with ✦ in Nagpur.</p>
+    <p style="display:flex;gap:16px">
+      <a href="#" style="color:var(--text-sub);text-decoration:none;font-size:0.72rem">Privacy Policy</a>
+      <a href="#" style="color:var(--text-sub);text-decoration:none;font-size:0.72rem">Terms of Service</a>
+    </p>
+  </div>
+</footer>
+
+<!-- ========== FAB CLUSTER ========== -->
+<div class="fab-cluster">
+  <a href="https://wa.me/919226539619?text=Hi! I'd like to book an appointment at Stylopia Hair Studio." target="_blank" class="fab fab-wa" title="WhatsApp">
+    <span class="fab-label">WhatsApp Us</span>
+    💬
+  </a>
+  <a href="tel:+919226539619" class="fab fab-call">
+    <span class="fab-label">Call Now</span>
+    📞
+  </a>
+  <a href="#booking" class="fab fab-book">
+    <span class="fab-label">Book Slot</span>
+    📅
+  </a>
+</div>
+
+<!-- Back to Top -->
+<button id="back-top" onclick="window.scrollTo({top:0,behavior:'smooth'})" title="Back to top">↑</button>
+
+<!-- ========== AI CHAT BUTTON ========== -->
+<button class="ai-chat-btn" onclick="toggleChat()" id="chat-trigger" title="Chat with Stylopia AI">
+  ✦
+  <span class="ai-pulse"></span>
+</button>
+
+<!-- ========== CHAT WINDOW ========== -->
+<div class="chat-window" id="chat-window">
+  <div class="chat-header">
+    <div class="chat-avatar">✦</div>
+    <div class="chat-header-info">
+      <h4>Stylopia Assistant</h4>
+      <p>Online · Replies instantly</p>
+    </div>
+    <button class="chat-close" onclick="toggleChat()">✕</button>
+  </div>
+
+  <div class="chat-tabs">
+    <button class="chat-tab active" onclick="switchTab('chat', this)">💬 Chat</button>
+    <button class="chat-tab" onclick="switchTab('call', this)">📞 Call</button>
+    <button class="chat-tab" onclick="switchTab('email', this)">✉ Email</button>
+    <button class="chat-tab" onclick="switchTab('sms', this)">📱 SMS</button>
+  </div>
+
+  <!-- Chat Tab -->
+  <div class="tab-content" id="tab-chat">
+    <div class="chat-body" id="chat-body">
+      <div class="chat-msg">
+        <div class="msg-avatar">✦</div>
+        <div class="msg-bubble">Namaste! 🙏 Welcome to Stylopia Hair Studio. I'm your AI assistant. I can help you book appointments, answer questions about services, pricing, and more. How can I help you today?</div>
+      </div>
+    </div>
+    <div class="chat-quick-replies" id="quick-replies">
+      <button class="quick-reply" onclick="sendQuick('Book an appointment')">📅 Book Appointment</button>
+      <button class="quick-reply" onclick="sendQuick('What are your services?')">💇 Services</button>
+      <button class="quick-reply" onclick="sendQuick('What are your timings?')">🕐 Timings</button>
+      <button class="quick-reply" onclick="sendQuick('How much does keratin cost?')">💰 Pricing</button>
+    </div>
+    <div class="chat-input-row">
+      <input type="text" class="chat-input" id="chat-input" placeholder="Ask me anything..." onkeydown="if(event.key==='Enter')sendMessage()">
+      <button class="chat-send" onclick="sendMessage()">→</button>
+    </div>
+  </div>
+
+  <!-- Call Tab -->
+  <div class="tab-content" id="tab-call" style="display:none;padding:24px">
+    <div style="text-align:center;padding:20px 0">
+      <div style="font-size:3rem;margin-bottom:16px">📞</div>
+      <h4 style="font-family:var(--font-display);font-size:1.4rem;color:var(--text);margin-bottom:8px">Call Our Studio</h4>
+      <p style="color:var(--text-muted);font-size:0.85rem;margin-bottom:24px">Speak directly with our team for immediate assistance, bookings, or consultations.</p>
+      <a href="tel:+919226539619" class="btn-primary" style="display:inline-flex;border:none;cursor:pointer;justify-content:center;width:100%;font-size:1rem;padding:18px">📞 +91 92265 39619</a>
+      <p style="color:var(--text-sub);font-size:0.72rem;margin-top:16px">Mon–Sat: 9 AM – 8 PM · Sun: 10 AM – 6 PM</p>
+      <div style="margin-top:20px;padding:16px;background:var(--bg);border-radius:10px;border:1px solid var(--border)">
+        <p style="font-size:0.78rem;color:var(--text-muted)">🤖 Our AI answers calls after hours. Leave a voice message and we'll respond within 2 hours.</p>
+      </div>
+    </div>
+  </div>
+
+  <!-- Email Tab -->
+  <div class="tab-content" id="tab-email" style="display:none;padding:20px">
+    <div style="margin-bottom:12px">
+      <div style="font-size:0.65rem;letter-spacing:0.15em;text-transform:uppercase;color:var(--text-muted);margin-bottom:6px">To</div>
+      <div style="padding:10px 14px;background:var(--bg);border:1px solid var(--border);border-radius:6px;font-size:0.85rem;color:var(--text)">stylopiahairstudio@gmail.com</div>
+    </div>
+    <div class="form-group">
+      <label>Your Name</label>
+      <input type="text" id="email-name" placeholder="Your name">
+    </div>
+    <div class="form-group">
+      <label>Subject</label>
+      <select id="email-subject" style="background:var(--bg);border:1px solid var(--border);color:var(--text);padding:10px 14px;font-family:var(--font-body);font-size:0.85rem;border-radius:6px;width:100%;outline:none">
+        <option>Appointment Enquiry</option>
+        <option>Service Pricing</option>
+        <option>Bridal Package</option>
+        <option>Feedback</option>
+        <option>Other</option>
+      </select>
+    </div>
+    <div class="form-group">
+      <label>Message</label>
+      <textarea id="email-body" rows="3" placeholder="Write your message..." style="resize:none"></textarea>
+    </div>
+    <button class="btn-submit" style="border-radius:6px" onclick="sendEmail()">Send Email ✉</button>
+  </div>
+
+  <!-- SMS Tab -->
+  <div class="tab-content" id="tab-sms" style="display:none;padding:20px">
+    <div style="text-align:center;padding:10px 0 20px">
+      <div style="font-size:2.5rem;margin-bottom:12px">📱</div>
+      <h4 style="font-family:var(--font-display);font-size:1.2rem;color:var(--text);margin-bottom:8px">Send SMS</h4>
+      <p style="color:var(--text-muted);font-size:0.82rem;margin-bottom:20px">Send us a text message and we'll reply within minutes.</p>
+    </div>
+    <div class="form-group">
+      <label>Your Name</label>
+      <input type="text" id="sms-name" placeholder="Your name">
+    </div>
+    <div class="form-group">
+      <label>Your Number</label>
+      <input type="tel" id="sms-phone" placeholder="+91 98765 43210">
+    </div>
+    <div class="form-group">
+      <label>Message</label>
+      <textarea id="sms-body" rows="3" placeholder="Hi! I'd like to enquire about..." style="resize:none"></textarea>
+    </div>
+    <button class="btn-submit" style="border-radius:6px" onclick="sendSMS()">Send SMS 📱</button>
+    <a href="https://wa.me/919226539619" target="_blank" class="btn-ghost" style="display:flex;justify-content:center;margin-top:10px;font-size:0.75rem">Or WhatsApp Instead 💬</a>
+  </div>
+</div>
+
+<!-- ========== ADMIN MODAL ========== -->
+<div class="modal-overlay" id="admin-modal">
+  <div class="modal-card">
+    <div class="modal-header">
+      <h2>✦ Admin Dashboard</h2>
+      <button class="modal-close" onclick="closeAdmin()">✕</button>
+    </div>
+
+    <div id="admin-login-view">
+      <p style="color:var(--text-muted);margin-bottom:24px;font-size:0.88rem">Enter admin credentials to view bookings.</p>
+      <div class="admin-login-form">
+        <input type="text" id="admin-user" placeholder="Username" autocomplete="off">
+        <input type="password" id="admin-pass" placeholder="Password">
+        <button class="btn-submit" onclick="adminLogin()" style="border-radius:6px;width:100%;margin-top:4px">Login →</button>
+      </div>
+    </div>
+
+    <div id="admin-dashboard-view" style="display:none">
+      <div class="admin-stats" id="admin-stats-grid"></div>
+
+      <div style="margin-bottom:16px;display:flex;justify-content:space-between;align-items:center;flex-wrap:wrap;gap:12px">
+        <h3 style="font-family:var(--font-display);color:var(--text)">Appointment Log</h3>
+        <button onclick="exportBookings()" class="btn-ghost" style="font-size:0.72rem;padding:8px 20px">⬇ Export CSV</button>
+      </div>
+
+      <div style="overflow-x:auto">
+        <table class="admin-table" id="admin-table">
+          <thead>
+            <tr>
+              <th>#</th>
+              <th>Client</th>
+              <th>Phone</th>
+              <th>Service</th>
+              <th>Date</th>
+              <th>Time</th>
+              <th>Status</th>
+            </tr>
+          </thead>
+          <tbody id="admin-tbody"></tbody>
+        </table>
+      </div>
+      <p id="no-bookings-msg" style="text-align:center;color:var(--text-muted);padding:40px;display:none">No appointments booked yet. They'll appear here once clients book.</p>
+    </div>
+  </div>
+</div>
+
+<!-- ========== SCRIPTS ========== -->
+<script>
+// ===================== THREE.JS 3D HERO =====================
+(function() {
+  const canvas = document.getElementById('hero-canvas');
+  const renderer = new THREE.WebGLRenderer({ canvas, alpha: true, antialias: true });
+  renderer.setPixelRatio(Math.min(window.devicePixelRatio, 2));
+  renderer.setSize(canvas.parentElement.offsetWidth, canvas.parentElement.offsetHeight);
+
+  const scene = new THREE.Scene();
+  const camera = new THREE.PerspectiveCamera(70, canvas.parentElement.offsetWidth / canvas.parentElement.offsetHeight, 0.1, 100);
+  camera.position.set(0, 0, 5);
+
+  // Gold particle system
+  const count = 1200;
+  const geometry = new THREE.BufferGeometry();
+  const positions = new Float32Array(count * 3);
+  const scales = new Float32Array(count);
+
+  for (let i = 0; i < count; i++) {
+    positions[i * 3] = (Math.random() - 0.5) * 14;
+    positions[i * 3 + 1] = (Math.random() - 0.5) * 10;
+    positions[i * 3 + 2] = (Math.random() - 0.5) * 8;
+    scales[i] = Math.random();
+  }
+
+  geometry.setAttribute('position', new THREE.BufferAttribute(positions, 3));
+  geometry.setAttribute('aScale', new THREE.BufferAttribute(scales, 1));
+
+  const material = new THREE.PointsMaterial({
+    color: 0xC9A84C,
+    size: 0.025,
+    sizeAttenuation: true,
+    transparent: true,
+    opacity: 0.7
+  });
+
+  const particles = new THREE.Points(geometry, material);
+  scene.add(particles);
+
+  // Floating geometric shapes
+  const shapes = [];
+  const geoTypes = [
+    new THREE.OctahedronGeometry(0.3, 0),
+    new THREE.TetrahedronGeometry(0.25, 0),
+    new THREE.IcosahedronGeometry(0.22, 0)
+  ];
+
+  for (let i = 0; i < 5; i++) {
+    const geo = geoTypes[i % 3];
+    const mat = new THREE.MeshBasicMaterial({
+      color: 0xC9A84C,
+      wireframe: true,
+      transparent: true,
+      opacity: 0.25
+    });
+    const mesh = new THREE.Mesh(geo, mat);
+    mesh.position.set(
+      (Math.random() - 0.5) * 8,
+      (Math.random() - 0.5) * 5,
+      (Math.random() - 0.5) * 3 - 1
+    );
+    mesh.userData = { rotX: (Math.random() - 0.5) * 0.008, rotY: (Math.random() - 0.5) * 0.012 };
+    scene.add(mesh);
+    shapes.push(mesh);
+  }
+
+  // Connecting lines
+  const lineMat = new THREE.LineBasicMaterial({ color: 0xC9A84C, transparent: true, opacity: 0.06 });
+  for (let i = 0; i < 8; i++) {
+    const pts = [
+      new THREE.Vector3((Math.random() - 0.5) * 12, (Math.random() - 0.5) * 8, -2),
+      new THREE.Vector3((Math.random() - 0.5) * 12, (Math.random() - 0.5) * 8, -2)
+    ];
+    const lineGeo = new THREE.BufferGeometry().setFromPoints(pts);
+    scene.add(new THREE.Line(lineGeo, lineMat));
+  }
+
+  // Mouse parallax
+  let mouseX = 0, mouseY = 0;
+  document.addEventListener('mousemove', (e) => {
+    mouseX = (e.clientX / window.innerWidth - 0.5) * 0.4;
+    mouseY = -(e.clientY / window.innerHeight - 0.5) * 0.3;
+  });
+
+  const clock = new THREE.Clock();
+
+  function animate() {
+    requestAnimationFrame(animate);
+    const elapsed = clock.getElapsedTime();
+
+    particles.rotation.y = elapsed * 0.04;
+    particles.rotation.x = elapsed * 0.02;
+
+    shapes.forEach(s => {
+      s.rotation.x += s.userData.rotX;
+      s.rotation.y += s.userData.rotY;
+    });
+
+    camera.position.x += (mouseX - camera.position.x) * 0.05;
+    camera.position.y += (mouseY - camera.position.y) * 0.05;
+    camera.lookAt(scene.position);
+
+    renderer.render(scene, camera);
+  }
+
+  animate();
+
+  window.addEventListener('resize', () => {
+    const w = canvas.parentElement.offsetWidth;
+    const h = canvas.parentElement.offsetHeight;
+    renderer.setSize(w, h);
+    camera.aspect = w / h;
+    camera.updateProjectionMatrix();
+  });
+})();
+
+// ===================== THEME =====================
+function setTheme(theme, btn) {
+  document.documentElement.setAttribute('data-theme', theme);
+  document.querySelectorAll('.theme-btn').forEach(b => b.classList.remove('active'));
+  btn.classList.add('active');
+  localStorage.setItem('stylopia-theme', theme);
+}
+
+(function initTheme() {
+  const saved = localStorage.getItem('stylopia-theme') || 'dark';
+  document.documentElement.setAttribute('data-theme', saved);
+  const btns = document.querySelectorAll('.theme-btn');
+  btns.forEach(b => {
+    if (b.textContent.toLowerCase() === saved) b.classList.add('active');
+    else b.classList.remove('active');
+  });
+})();
+
+// ===================== SCROLL REVEAL =====================
+const observer = new IntersectionObserver((entries) => {
+  entries.forEach(e => { if (e.isIntersecting) { e.target.classList.add('visible'); } });
+}, { threshold: 0.1 });
+
+document.querySelectorAll('.reveal').forEach(el => observer.observe(el));
+
+// ===================== PROGRESS BAR =====================
+window.addEventListener('scroll', () => {
+  const scrolled = (window.scrollY / (document.documentElement.scrollHeight - window.innerHeight)) * 100;
+  document.getElementById('progress-bar').style.width = scrolled + '%';
+
+  const backTop = document.getElementById('back-top');
+  if (window.scrollY > 600) backTop.classList.add('visible');
+  else backTop.classList.remove('visible');
+});
+
+// ===================== HAMBURGER =====================
+function toggleMenu() {
+  document.getElementById('mobile-menu').classList.toggle('open');
+  document.body.style.overflow = document.getElementById('mobile-menu').classList.contains('open') ? 'hidden' : '';
+}
+
+// ===================== SERVICES FILTER =====================
+function filterServices(cat, btn) {
+  document.querySelectorAll('.filter-btn').forEach(b => b.classList.remove('active'));
+  btn.classList.add('active');
+  document.querySelectorAll('.service-card').forEach(card => {
+    if (cat === 'all' || card.dataset.cat === cat) {
+      card.style.display = 'block';
+    } else {
+      card.style.display = 'none';
+    }
+  });
+}
+
+// ===================== DATE & SLOT SYSTEM =====================
+// Track booked slots: { "YYYY-MM-DD_HH:MM": true }
+const bookedSlots = JSON.parse(localStorage.getItem('stylopia-booked') || '{}');
+
+function generateSlots() {
+  const date = document.getElementById('booking-date').value;
+  if (!date) return;
+
+  const slots = ['09:00','09:30','10:00','10:30','11:00','11:30','12:00','12:30','13:30','14:00','14:30','15:00','15:30','16:00','16:30','17:00','17:30','18:00','18:30','19:00'];
+  const container = document.getElementById('time-slots');
+  container.innerHTML = '';
+
+  // Randomly mark some as booked for realism
+  const seed = date.replace(/-/g, '');
+  const bookedCount = parseInt(seed.slice(-2)) % 5 + 2;
+
+  slots.forEach((slot, i) => {
+    const key = date + '_' + slot;
+    const isBooked = bookedSlots[key] || (i % 7 === parseInt(seed.slice(-1)) % 7);
+    const div = document.createElement('div');
+    div.className = 'time-slot' + (isBooked ? ' booked' : '');
+    div.textContent = slot;
+    if (!isBooked) {
+      div.onclick = function() {
+        document.querySelectorAll('.time-slot').forEach(s => s.classList.remove('selected'));
+        this.classList.add('selected');
+        this.dataset.time = slot;
+      };
+    }
+    container.appendChild(div);
+  });
+}
+
+// Set min date to today
+document.getElementById('booking-date').min = new Date().toISOString().split('T')[0];
+
+// ===================== BOOKING SUBMIT =====================
+const bookings = JSON.parse(localStorage.getItem('stylopia-bookings') || '[]');
+
+function submitBooking() {
+  const fname = document.getElementById('fname').value.trim();
+  const lname = document.getElementById('lname').value.trim();
+  const phone = document.getElementById('phone').value.trim();
+  const service = document.getElementById('service-select').value;
+  const date = document.getElementById('booking-date').value;
+  const selectedSlot = document.querySelector('.time-slot.selected');
+  const notes = document.getElementById('notes').value.trim();
+
+  if (!fname || !phone || !service || !date || !selectedSlot) {
+    alert('Please fill in all required fields and select a time slot.');
+    return;
+  }
+
+  const time = selectedSlot.textContent;
+  const key = date + '_' + time;
+  bookedSlots[key] = true;
+  localStorage.setItem('stylopia-booked', JSON.stringify(bookedSlots));
+
+  const booking = {
+    id: Date.now(),
+    name: fname + ' ' + lname,
+    phone,
+    service,
+    date,
+    time,
+    notes,
+    status: 'Confirmed',
+    createdAt: new Date().toLocaleString()
+  };
+
+  bookings.push(booking);
+  localStorage.setItem('stylopia-bookings', JSON.stringify(bookings));
+
+  // Show confirmation
+  document.getElementById('booking-form-card').style.display = 'none';
+  const confirm = document.getElementById('booking-confirm');
+  confirm.style.display = 'flex';
+  confirm.style.flexDirection = 'column';
+  confirm.style.alignItems = 'center';
+
+  document.getElementById('confirm-details').innerHTML = `
+    <div style="display:flex;flex-direction:column;gap:10px">
+      <div style="display:flex;justify-content:space-between"><span style="color:var(--text-muted);font-size:0.82rem">Client</span><span style="color:var(--text);font-size:0.88rem;font-weight:500">${booking.name}</span></div>
+      <div style="display:flex;justify-content:space-between"><span style="color:var(--text-muted);font-size:0.82rem">Service</span><span style="color:var(--text);font-size:0.88rem">${booking.service}</span></div>
+      <div style="display:flex;justify-content:space-between"><span style="color:var(--text-muted);font-size:0.82rem">Date</span><span style="color:var(--text);font-size:0.88rem">${new Date(date + 'T12:00').toLocaleDateString('en-IN', {weekday:'long',year:'numeric',month:'long',day:'numeric'})}</span></div>
+      <div style="display:flex;justify-content:space-between"><span style="color:var(--text-muted);font-size:0.82rem">Time</span><span style="color:var(--gold);font-size:0.88rem;font-weight:500">${time}</span></div>
+      <div style="display:flex;justify-content:space-between"><span style="color:var(--text-muted);font-size:0.82rem">Ref ID</span><span style="color:var(--text-sub);font-size:0.78rem">#STP${booking.id.toString().slice(-6)}</span></div>
+    </div>
+  `;
+}
+
+function resetBooking() {
+  document.getElementById('booking-form-card').style.display = 'block';
+  document.getElementById('booking-confirm').style.display = 'none';
+  document.getElementById('fname').value = '';
+  document.getElementById('lname').value = '';
+  document.getElementById('phone').value = '';
+  document.getElementById('email').value = '';
+  document.getElementById('service-select').value = '';
+  document.getElementById('booking-date').value = '';
+  document.getElementById('notes').value = '';
+  document.getElementById('time-slots').innerHTML = '<div style="color:var(--text-muted);font-size:0.78rem;grid-column:1/-1;">Select a date to see available slots</div>';
+}
+
+// ===================== ADMIN =====================
+function openAdmin() {
+  document.getElementById('admin-modal').classList.add('open');
+  document.getElementById('admin-login-view').style.display = 'block';
+  document.getElementById('admin-dashboard-view').style.display = 'none';
+}
+
+function closeAdmin() {
+  document.getElementById('admin-modal').classList.remove('open');
+}
+
+function adminLogin() {
+  const user = document.getElementById('admin-user').value;
+  const pass = document.getElementById('admin-pass').value;
+
+  if (user === 'stylopia' && pass === 'admin2025') {
+    document.getElementById('admin-login-view').style.display = 'none';
+    document.getElementById('admin-dashboard-view').style.display = 'block';
+    renderAdminDashboard();
+  } else {
+    alert('Invalid credentials. Hint: username=stylopia, password=admin2025');
+  }
+}
+
+function renderAdminDashboard() {
+  const all = JSON.parse(localStorage.getItem('stylopia-bookings') || '[]');
+  const today = new Date().toISOString().split('T')[0];
+  const todayBookings = all.filter(b => b.date === today);
+
+  document.getElementById('admin-stats-grid').innerHTML = `
+    <div class="admin-stat"><div class="admin-stat-num">${all.length}</div><div class="admin-stat-label">Total Bookings</div></div>
+    <div class="admin-stat"><div class="admin-stat-num">${todayBookings.length}</div><div class="admin-stat-label">Today</div></div>
+    <div class="admin-stat"><div class="admin-stat-num">${all.filter(b=>b.status==='Confirmed').length}</div><div class="admin-stat-label">Confirmed</div></div>
+    <div class="admin-stat"><div class="admin-stat-num">${all.length ? '₹' + (all.length * 850).toLocaleString('en-IN') : '₹0'}</div><div class="admin-stat-label">Est. Revenue</div></div>
+  `;
+
+  const tbody = document.getElementById('admin-tbody');
+  tbody.innerHTML = '';
+
+  if (all.length === 0) {
+    document.getElementById('no-bookings-msg').style.display = 'block';
+    return;
+  }
+
+  [...all].reverse().forEach((b, i) => {
+    const tr = document.createElement('tr');
+    tr.innerHTML = `
+      <td>${all.length - i}</td>
+      <td>${b.name}</td>
+      <td><a href="tel:${b.phone}" style="color:var(--gold);text-decoration:none">${b.phone}</a></td>
+      <td>${b.service}</td>
+      <td>${new Date(b.date + 'T12:00').toLocaleDateString('en-IN')}</td>
+      <td>${b.time}</td>
+      <td><span class="status-badge status-confirmed">${b.status}</span></td>
+    `;
+    tbody.appendChild(tr);
+  });
+}
+
+function exportBookings() {
+  const all = JSON.parse(localStorage.getItem('stylopia-bookings') || '[]');
+  if (!all.length) { alert('No bookings to export.'); return; }
+
+  const csv = ['#,Name,Phone,Service,Date,Time,Status,Booked At']
+    .concat(all.map((b, i) => `${i+1},"${b.name}","${b.phone}","${b.service}","${b.date}","${b.time}","${b.status}","${b.createdAt}"`))
+    .join('\n');
+
+  const link = document.createElement('a');
+  link.href = 'data:text/csv;charset=utf-8,' + encodeURIComponent(csv);
+  link.download = 'stylopia-bookings.csv';
+  link.click();
+}
+
+// Close modal on outside click
+document.getElementById('admin-modal').addEventListener('click', function(e) {
+  if (e.target === this) closeAdmin();
+});
+
+// ===================== AI CHAT =====================
+const chatKnowledge = {
+  greetings: ['hello','hi','hey','namaste','hii','helo'],
+  booking: ['book','appointment','schedule','slot','reserve','availab'],
+  services: ['service','offer','do you','provide','treatment','keratin','balayage','cut','color','colour','bridal','spa','smooth'],
+  pricing: ['price','cost','charge','rate','how much','fee','₹','rs'],
+  timing: ['time','hour','open','close','when','timing','schedule','day'],
+  location: ['where','location','address','find','how to reach','direction','map','nagpur','sitabuldi'],
+  contact: ['contact','phone','call','number','whatsapp','email'],
+  instagram: ['instagram','social','photo','post','follow'],
+};
+
+const chatResponses = {
+  greeting: "Namaste! 🙏 Welcome to Stylopia Hair Studio. I'm here to help you with bookings, service info, pricing, and more. What can I do for you today?",
+  booking: "✦ To book an appointment, scroll up to our **Book Appointment** section or click the 📅 button below. You can:\n\n• Select your preferred service\n• Pick a date & time slot\n• Enter your details\n\nYou'll get instant confirmation! Alternatively, call us at +91 92265 39619.",
+  services: "✦ Our premium services include:\n\n💇 **Cuts** – Precision Hair Cut (₹300+)\n💎 **Treatments** – Keratin (₹2500+), Smoothing (₹1500+), Hair Spa (₹600+)\n🎨 **Color** – Balayage (₹1800+), Global Color (₹800+)\n👰 **Styling** – Bridal (₹2000+), Party Styling (₹500+)\n\nAll prices vary by hair length. Which service interests you?",
+  pricing: "✦ Our pricing starts at:\n\n• Hair Cut – ₹300+\n• Hair Spa – ₹600+\n• Scalp Treatment – ₹700+\n• Hair Color – ₹800+\n• Smoothing – ₹1,500+\n• Keratin – ₹2,500+\n• Balayage – ₹1,800+\n• Bridal – ₹2,000+\n\nPrices depend on hair length. Call us for exact quotes: +91 92265 39619",
+  timing: "✦ Our studio hours:\n\n🗓 **Monday – Friday:** 9:00 AM – 8:00 PM\n🗓 **Saturday:** 8:30 AM – 9:00 PM\n🗓 **Sunday:** 10:00 AM – 6:00 PM\n\nWe recommend booking in advance as slots fill up quickly!",
+  location: "📍 **Stylopia Hair Studio**\n41/26, 1st Floor, Jhansi Rani Square\nBehind Nilawar Sadi Center\nSitabuldi, Nagpur – 440010\n\nClick 'Get Directions' on our website or call +91 92265 39619 for assistance.",
+  contact: "📞 **Phone/WhatsApp:** +91 92265 39619\n✉ **Email:** stylopiahairstudio@gmail.com\n📸 **Instagram:** @stylopiahairstudio_\n\nWe also reply on WhatsApp instantly during business hours!",
+  instagram: "📸 Follow us on Instagram @stylopiahairstudio_ to see our latest work, transformations, and special offers!\n\nhttps://www.instagram.com/stylopiahairstudio_",
+  default: "✦ I can help you with:\n\n• **Booking** an appointment\n• **Service** information\n• **Pricing** details\n• **Timings** & location\n• **Contact** information\n\nOr call us directly at +91 92265 39619! Is there anything specific you'd like to know?"
+};
+
+function detectIntent(msg) {
+  const m = msg.toLowerCase();
+  for (const [intent, keywords] of Object.entries(chatKnowledge)) {
+    if (keywords.some(k => m.includes(k))) return intent;
+  }
+  return 'default';
+}
+
+function addMessage(text, isUser) {
+  const body = document.getElementById('chat-body');
+  const div = document.createElement('div');
+  div.className = 'chat-msg' + (isUser ? ' user' : '');
+
+  const avatar = document.createElement('div');
+  avatar.className = 'msg-avatar' + (isUser ? ' user' : '');
+  avatar.textContent = isUser ? '👤' : '✦';
+
+  const bubble = document.createElement('div');
+  bubble.className = 'msg-bubble';
+  bubble.innerHTML = text.replace(/\*\*(.*?)\*\*/g, '<strong>$1</strong>').replace(/\n/g, '<br>');
+
+  div.appendChild(avatar);
+  div.appendChild(bubble);
+  body.appendChild(div);
+  body.scrollTop = body.scrollHeight;
+}
+
+function addTypingIndicator() {
+  const body = document.getElementById('chat-body');
+  const div = document.createElement('div');
+  div.className = 'chat-msg';
+  div.id = 'typing-indicator';
+
+  const avatar = document.createElement('div');
+  avatar.className = 'msg-avatar';
+  avatar.textContent = '✦';
+
+  const typing = document.createElement('div');
+  typing.className = 'typing-indicator';
+  typing.innerHTML = '<div class="typing-dot"></div><div class="typing-dot"></div><div class="typing-dot"></div>';
+
+  div.appendChild(avatar);
+  div.appendChild(typing);
+  body.appendChild(div);
+  body.scrollTop = body.scrollHeight;
+}
+
+function sendMessage() {
+  const input = document.getElementById('chat-input');
+  const text = input.value.trim();
+  if (!text) return;
+
+  addMessage(text, true);
+  input.value = '';
+  document.getElementById('quick-replies').style.display = 'none';
+
+  addTypingIndicator();
+
+  setTimeout(() => {
+    document.getElementById('typing-indicator')?.remove();
+    const intent = detectIntent(text);
+    const response = chatResponses[intent] || chatResponses.default;
+    addMessage(response, false);
+  }, 900 + Math.random() * 600);
+}
+
+function sendQuick(text) {
+  document.getElementById('chat-input').value = text;
+  sendMessage();
+}
+
+function toggleChat() {
+  const win = document.getElementById('chat-window');
+  win.classList.toggle('open');
+}
+
+function switchTab(tab, btn) {
+  document.querySelectorAll('.tab-content').forEach(t => t.style.display = 'none');
+  document.querySelectorAll('.chat-tab').forEach(t => t.classList.remove('active'));
+  document.getElementById('tab-' + tab).style.display = 'block';
+  btn.classList.add('active');
+}
+
+// Email/SMS handlers
+function sendEmail() {
+  const name = document.getElementById('email-name').value.trim();
+  const subject = document.getElementById('email-subject').value;
+  const body = document.getElementById('email-body').value.trim();
+  if (!name || !body) { alert('Please fill all fields.'); return; }
+  const mailto = `mailto:stylopiahairstudio@gmail.com?subject=${encodeURIComponent(subject + ' - ' + name)}&body=${encodeURIComponent('From: ' + name + '\n\n' + body)}`;
+  window.open(mailto);
+}
+
+function sendSMS() {
+  const name = document.getElementById('sms-name').value.trim();
+  const phone = document.getElementById('sms-phone').value.trim();
+  const msg = document.getElementById('sms-body').value.trim();
+  if (!name || !msg) { alert('Please fill all fields.'); return; }
+  const waMsg = `Hi Stylopia! I'm ${name} (${phone}). ${msg}`;
+  window.open(`https://wa.me/919226539619?text=${encodeURIComponent(waMsg)}`);
+}
+
+// ===================== SMOOTH NAV SCROLL =====================
+document.querySelectorAll('a[href^="#"]').forEach(a => {
+  a.addEventListener('click', e => {
+    const target = document.querySelector(a.getAttribute('href'));
+    if (target) {
+      e.preventDefault();
+      const offset = target.getBoundingClientRect().top + window.scrollY - 80;
+      window.scrollTo({ top: offset, behavior: 'smooth' });
+    }
+  });
+});
+
+// ===================== COUNTER ANIMATION =====================
+function animateCounters() {
+  document.querySelectorAll('.stat-num').forEach(el => {
+    const text = el.textContent;
+    const num = parseFloat(text.replace(/[^0-9.]/g, ''));
+    const suffix = text.replace(/[0-9.]/g, '');
+    if (!num) return;
+    let start = 0;
+    const duration = 1500;
+    const step = num / (duration / 16);
+    const counter = setInterval(() => {
+      start += step;
+      if (start >= num) { start = num; clearInterval(counter); }
+      el.textContent = (Number.isInteger(num) ? Math.floor(start) : start.toFixed(1)) + suffix;
+    }, 16);
+  });
+}
+
+const heroObserver = new IntersectionObserver((entries) => {
+  if (entries[0].isIntersecting) { setTimeout(animateCounters, 500); heroObserver.disconnect(); }
+}, { threshold: 0.5 });
+
+heroObserver.observe(document.querySelector('.hero-stats'));
+
+console.log('%c✦ STYLOPIA HAIR STUDIO', 'font-size:20px;color:#C9A84C;font-weight:bold;font-family:serif');
+console.log('%cAdmin: username=stylopia | password=admin2025', 'color:#888;font-size:12px');
+</script>
+</body>
+</html>
